@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_light"
+    tools:context=".ChooseScreen">
+    <androidx.appcompat.widget.Toolbar
+        android:background="@color/purple_500"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <androidx.appcompat.widget.AppCompatImageView
+            android:visibility="gone"
+            android:src="@drawable/ic_baseline_arrow_back_24"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:text="Select One"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:textSize="18dp"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </androidx.appcompat.widget.Toolbar>
+    <TextView
+        android:layout_marginTop="100dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_gravity="center"
+        android:textStyle="bold"
+        android:visibility="gone"
+        android:textSize="20dp"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Select One"/>
+
+    <RadioGroup
+        android:id="@+id/rg_btn"
+        android:layout_marginTop="130dp"
+        android:layout_marginBottom="30dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:text="Add your own device"
+            android:padding="10dp"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:gravity="center|start"
+            android:button="@android:color/transparent"
+            android:background="@drawable/rdo_btn"
+            android:textColor="@drawable/ratio_txt"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <RadioButton
+            android:text="Add another device"
+            android:padding="10dp"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:gravity="center|start"
+            android:button="@android:color/transparent"
+            android:background="@drawable/rdo_btn"
+            android:textColor="@drawable/ratio_txt"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </RadioGroup>
+    <Button
+        android:id="@+id/btn_pr"
+        android:layout_marginTop="100dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_gravity="bottom|center"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:background="@drawable/btn_shape"
+        android:layout_marginBottom="50dp"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:text="Proceed"/>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

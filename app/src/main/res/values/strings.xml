@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Device Identity</string>
+    <string name="back_issue">Having some issue from the server. Please try again</string>
+    <string name="content_title"> You have not added any device yet. So Follow this step</string>
+    <string name="follow_points"> 1. Click fab button placed in bottom right end \n 2. Will Found two buttons as "Add own device" And  "Add another Device" \n 3. Click any one then fill the form </string>
+    <string name="your_current_os_version_does_not_allow_imei_detection_know_more_close">Your current OS version does not allow IMEI detection.</string>
+    <string name="e_g_amp_x2715">2023-✖✖✖✖</string>
+    <string name="location_permission"> Location and camera permission</string>
+    <string name="location_permission_message">We need location permission to get location of your work and Camera permission.</string>
+
+</resources>

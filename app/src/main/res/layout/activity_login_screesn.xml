@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".LoginScreesn">
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_gravity="center"
+        android:src="@drawable/ic_baseline_location_on_24"
+        android:layout_marginTop="40dp"
+        android:layout_width="120dp"
+        android:layout_height="120dp"/>
+    <androidx.appcompat.widget.AppCompatTextView
+        android:text="Login"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/edit_email_login"
+        android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890_"
+        android:inputType="textFilter"
+        android:layout_height="48dp"
+        android:paddingStart="10dp"
+        android:background="@drawable/editdrawable"
+        android:hint="Username"
+        android:layout_width="match_parent"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        app:passwordToggleEnabled="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edit_password_login"
+            android:layout_height="48dp"
+            android:inputType="textPassword"
+            android:paddingStart="10dp"
+            android:background="@drawable/editdrawable"
+            android:hint="Password"
+            android:layout_width="match_parent"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:visibility="gone"
+        android:orientation="vertical">
+        <androidx.appcompat.widget.AppCompatTextView
+            android:text=" Select Device Type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/device_type"
+            android:layout_height="48dp"
+            android:layout_marginTop="5dp"
+            android:inputType="text"
+            android:textColorHint="@color/gray"
+            android:paddingStart="10dp"
+            android:hint="Device Type"
+            android:layout_width="match_parent"/>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/login_btn"
+        android:src="@drawable/ic_baseline_arrow_circle_right_24"
+        android:layout_gravity="center"
+        android:layout_width="90dp"
+        android:layout_marginTop="40dp"
+        android:layout_height="90dp"/>
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_height="match_parent">
+        <TextView
+            android:text="Don't have an account? "
+            android:textSize="14dp"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/register"
+            android:text="Register"
+            android:textSize="18dp"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>

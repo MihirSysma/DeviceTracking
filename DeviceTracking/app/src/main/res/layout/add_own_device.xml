@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context=".AddOwnDevicesScreensOne">
+    <androidx.appcompat.widget.Toolbar
+        android:background="@color/purple_500"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/back"
+            android:visibility="visible"
+            android:src="@drawable/ic_baseline_arrow_back_24"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/title"
+            android:text="Add own device"
+            android:textStyle="bold"
+            android:textSize="16dp"
+            android:layout_marginLeft="30dp"
+            android:textColor="@color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/mydevice"
+            android:layout_gravity="end"
+            android:textStyle="bold"
+            android:text="My Device"
+            android:layout_marginRight="10dp"
+            android:textColor="@color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/exit_app"
+            android:visibility="gone"
+            android:layout_gravity="end"
+            android:textStyle="bold"
+            android:text="Logout"
+            android:layout_marginRight="10dp"
+            android:textColor="@color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+            <androidx.appcompat.widget.AppCompatTextView
+                android:text=" Select Device Type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/device_text"
+                android:hint="Select Device Type"
+                android:layout_gravity="center"
+                android:paddingStart="5dp"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:gravity="center|start"
+                android:background="@drawable/editdrawable"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"/>
+
+          <!--  <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/device_type"
+                android:layout_height="48dp"
+                android:layout_marginTop="5dp"
+                android:inputType="text"
+                android:textColorHint="@color/gray"
+                android:paddingStart="10dp"
+                android:hint="Device Type"
+                android:layout_width="match_parent"/>-->
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+            <androidx.appcompat.widget.AppCompatTextView
+                android:text=" Brand Name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/brand_txt"
+                android:hint="Select Brand Type"
+                android:layout_gravity="center"
+                android:paddingStart="5dp"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:gravity="center|start"
+                android:background="@drawable/editdrawable"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+            <androidx.appcompat.widget.AppCompatTextView
+                android:text=" Model Name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/model_text"
+                android:hint="Select Model Type"
+                android:layout_gravity="center"
+                android:paddingStart="5dp"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:gravity="center|start"
+                android:background="@drawable/editdrawable"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+            <androidx.appcompat.widget.AppCompatTextView
+                android:text="Device IMEA number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/imei_number"
+                android:layout_height="48dp"
+                android:maxLength="15"
+                android:layout_marginTop="5dp"
+                android:focusableInTouchMode="false"
+                android:digits="1234567890"
+                android:inputType="number"
+                android:textColorHint="@color/gray"
+                android:paddingStart="10dp"
+                android:background="@drawable/editdrawable"
+                android:hint="E.g 1234...15"
+                android:layout_width="match_parent"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+            <androidx.appcompat.widget.AppCompatTextView
+                android:text=" Select Network"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/network_text"
+                android:hint="Select Network"
+                android:layout_gravity="center"
+                android:paddingStart="5dp"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:gravity="center|start"
+                android:background="@drawable/editdrawable"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:visibility="gone"
+            android:orientation="vertical">
+            <androidx.appcompat.widget.AppCompatTextView
+                android:text=" Mobile Status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/mobile_statuss"
+                android:layout_height="48dp"
+                android:visibility="gone"
+                android:layout_marginTop="5dp"
+                android:inputType="text"
+                android:textColorHint="@color/gray"
+                android:paddingStart="10dp"
+                android:hint="Select Mobile Status"
+                android:layout_width="match_parent"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/ly_serial_number"
+            android:visibility="gone"
+            android:orientation="vertical"
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <androidx.appcompat.widget.AppCompatTextView
+                android:text="Enter Serial Number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/serial_numner"
+                android:layout_height="48dp"
+                android:layout_marginTop="5dp"
+                android:inputType="textCapCharacters"
+                android:textColorHint="@color/gray"
+                android:paddingStart="10dp"
+                android:background="@drawable/editdrawable"
+                android:hint="E.g android &amp; iOS"
+                android:layout_width="match_parent"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/ly_add_device"
+            android:visibility="visible"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="vertical">
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:text="Please enter last 4 digits of Cell number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/sim_number"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="5dp"
+                    android:digits="1234567890"
+                    android:inputType="number"
+                    android:maxLength="4"
+                    android:focusableInTouchMode="true"
+                    android:textColorHint="@color/gray"
+                    android:paddingStart="10dp"
+                    android:background="@drawable/editdrawable"
+                    android:hint="E.g ..2342"
+                    android:layout_width="match_parent"/>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_margin="10dp"
+                android:orientation="vertical">
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:text=" Device Id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/operating_system"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="5dp"
+                    android:inputType="textCapCharacters"
+                    android:focusableInTouchMode="false"
+                    android:textColorHint="@color/gray"
+                    android:paddingStart="10dp"
+                    android:background="@drawable/editdrawable"
+                    android:hint="E.g android &amp; iOS"
+                    android:layout_width="match_parent"/>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:visibility="gone"
+                android:orientation="vertical">
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:text=" Manufacture serial number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/manu_serial_number"
+                    android:layout_height="48dp"
+                    android:maxLength="20"
+                    android:layout_marginTop="5dp"
+                    android:inputType="number"
+                    android:digits="0123456789"
+                    android:focusableInTouchMode="false"
+                    android:textColorHint="@color/gray"
+                    android:paddingStart="10dp"
+                    android:background="@drawable/editdrawable"
+                    android:hint="E.g 123676"
+                    android:layout_width="match_parent"/>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:layout_margin="10dp"
+                android:orientation="vertical">
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:text=" Mark of compliance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/mark_of_comp"
+                    android:layout_height="48dp"
+                    android:digits="1234567890-"
+                    android:inputType="textFilter|number"
+                    android:layout_marginTop="5dp"
+                    android:maxLength="16"
+                    android:textColorHint="#CFD4D8"
+                    android:paddingStart="10dp"
+                    android:background="@drawable/editdrawable"
+                    android:hint="@string/e_g_amp_x2715"
+                    android:layout_width="match_parent"/>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:visibility="gone"
+                android:orientation="vertical">
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:text="Date and Time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/date_time"
+                    android:layout_height="48dp"
+                    android:visibility="gone"
+                    android:layout_marginTop="5dp"
+                    android:drawableRight="@drawable/ic_baseline_watch_later_24"
+                    android:inputType="none"
+                    android:editable="false"
+                    android:drawablePadding="10dp"
+                    android:textColorHint="@color/gray"
+                    android:paddingStart="10dp"
+                    android:background="@drawable/editdrawable"
+                    android:hint="Date and Time"
+                    android:layout_width="match_parent"/>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:visibility="gone"
+                android:orientation="vertical">
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:text=" Email Id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/email_id"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="5dp"
+                    android:inputType="textEmailAddress"
+                    android:textColorHint="@color/gray"
+                    android:paddingStart="10dp"
+                    android:background="@drawable/editdrawable"
+                    android:hint="Enter email"
+                    android:layout_width="match_parent"/>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="vertical">
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:text="GPS location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/gps_location"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_gravity="top|start"
+                    android:gravity="top|start"
+                    android:inputType="textMultiLine"
+                    android:maxLines="2"
+                    android:minLines="2"
+                    android:focusableInTouchMode="false"
+                    android:textColorHint="@color/gray"
+                    android:paddingStart="10dp"
+                    android:background="@drawable/editdrawable"
+                    android:hint="Location"
+                    android:layout_width="match_parent"/>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/submit_add_device"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:backgroundTint="@color/purple_700"
+            android:background="@drawable/editdrawable"
+            android:layout_width="match_parent"
+            android:layout_margin="20dp"
+            android:text="Submit"
+            android:textColor="@color/white"
+            android:layout_height="wrap_content"/>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+    </ScrollView>
+
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>

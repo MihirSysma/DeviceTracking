@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context=".AddOwnDevicesScreens">
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+        <androidx.appcompat.widget.AppCompatTextView
+            android:text="Device IMEA number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <androidx.appcompat.widget.AppCompatEditText
+            android:layout_height="48dp"
+            android:layout_marginTop="5dp"
+            android:inputType="text"
+            android:textColorHint="@color/gray"
+            android:paddingStart="10dp"
+            android:background="@drawable/editdrawable"
+            android:hint="Device IMEA number"
+            android:layout_width="match_parent"/>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+        <androidx.appcompat.widget.AppCompatTextView
+            android:text="Sim number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <androidx.appcompat.widget.AppCompatEditText
+            android:layout_height="48dp"
+            android:layout_marginTop="5dp"
+            android:inputType="text"
+            android:textColorHint="@color/gray"
+            android:paddingStart="10dp"
+            android:background="@drawable/editdrawable"
+            android:hint="Sim number"
+            android:layout_width="match_parent"/>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+        <androidx.appcompat.widget.AppCompatTextView
+            android:text=" Operation system and version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <androidx.appcompat.widget.AppCompatEditText
+            android:layout_height="48dp"
+            android:layout_marginTop="5dp"
+            android:inputType="text"
+            android:textColorHint="@color/gray"
+            android:paddingStart="10dp"
+            android:background="@drawable/editdrawable"
+            android:hint="Operation system and version"
+            android:layout_width="match_parent"/>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+        <androidx.appcompat.widget.AppCompatTextView
+            android:text="Device manufacturer and model"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <androidx.appcompat.widget.AppCompatEditText
+            android:layout_height="48dp"
+            android:layout_marginTop="5dp"
+            android:inputType="text"
+            android:textColorHint="@color/gray"
+            android:paddingStart="10dp"
+            android:background="@drawable/editdrawable"
+            android:hint="Device manufacturer and model"
+            android:layout_width="match_parent"/>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+        <androidx.appcompat.widget.AppCompatTextView
+            android:text="Date and Time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <androidx.appcompat.widget.AppCompatEditText
+            android:layout_height="48dp"
+            android:layout_marginTop="5dp"
+            android:drawableRight="@drawable/ic_baseline_watch_later_24"
+            android:inputType="text"
+            android:drawablePadding="5dp"
+            android:textColorHint="@color/gray"
+            android:paddingStart="10dp"
+            android:background="@drawable/editdrawable"
+            android:hint="Date and Time"
+            android:layout_width="match_parent"/>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+        <androidx.appcompat.widget.AppCompatTextView
+            android:text="GPS location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <androidx.appcompat.widget.AppCompatEditText
+            android:layout_height="60dp"
+            android:layout_marginTop="5dp"
+            android:layout_gravity="top|start"
+            android:gravity="top|start"
+            android:inputType="text"
+            android:textColorHint="@color/gray"
+            android:paddingStart="10dp"
+            android:background="@drawable/editdrawable"
+            android:hint="GPS location"
+            android:layout_width="match_parent"/>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_gravity="center"
+        android:gravity="center"
+
+        android:backgroundTint="@color/purple_700"
+        android:background="@drawable/editdrawable"
+        android:layout_width="match_parent"
+        android:layout_margin="20dp"
+        android:text="Submit"
+        android:textColor="@color/white"
+        android:layout_height="wrap_content"/>
+
+
+
+
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>
