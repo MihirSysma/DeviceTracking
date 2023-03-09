@@ -9,7 +9,6 @@ import com.devicet.devicetracking.Models.LoginModel;
 import com.devicet.devicetracking.Models.RegisterModel;
 import com.devicet.devicetracking.Models.TokenModel;
 import com.devicet.devicetracking.Models.UpdateStatus;
-
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -63,7 +62,22 @@ public interface EndPoints {
                                     @Field("imei") String imei, @Field("imei2") String imei_2,
                                     @Field("detection_lat") String detection_lat, @Field("detection_long") String detection_long,
                                     @Field("user_id") int user_id, @Field("status") String status,
-                                    @Field("network_sim_code") String network_sim_code,
+                                    @Field("network_one")String networkTypeOne,
+                                    @Field("network_two")String networkTypeTwo,
+                                    @Field("network_sim_code") int network_sim_code, // last 4 digits of mobile num
+                                    @Field("network_sim_code_2") int network_sim_code_2,
+                                    @Field("manufacture_serial_number") String manufacture_serial_number,
+                                    @Field("mark_of_compliance") String mark_of_compliance,
+                                    @Field("product_device_id") String product_device_id,
+                                    @Field("address") String address, @Field("type") String type
+    );
+
+    @FormUrlEncoded
+    @POST(ApiConstants.ADD_DETECTION_END_POINTS)
+    Call<DetectionModel> detectionOtherDevice(@Header("authorization") String auth, @Field("device_brand") String device_brand,
+                                    @Field("device_model") String device_model, @Field("device_os") String device_os,
+                                    @Field("detection_lat") String detection_lat, @Field("detection_long") String detection_long,
+                                    @Field("user_id") int user_id, @Field("status") String status,
                                     @Field("manufacture_serial_number") String manufacture_serial_number,
                                     @Field("mark_of_compliance") String mark_of_compliance,
                                     @Field("product_device_id") String product_device_id,
@@ -73,7 +87,7 @@ public interface EndPoints {
 
     @FormUrlEncoded
     @POST(ApiConstants.UPDATE_STATUS)
-    Call<UpdateStatus> updatestatus(@Header("authorization") String auth, @Field("user_id") String user_id,
+    Call<UpdateStatus> updateStatus(@Header("authorization") String auth, @Field("user_id") String user_id,
                                     @Field("imei") String imei, @Field("detection_lat") String detection_lat,
                                     @Field("detection_long") String detection_long, @Field("address") String address,
                                     @Field("status") String status, @Field("type") String type,

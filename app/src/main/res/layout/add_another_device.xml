@@ -226,55 +226,6 @@
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=" Manufacture serial number" />
-
-                    <androidx.appcompat.widget.AppCompatEditText
-                        android:id="@+id/mark_of_comp"
-                        android:layout_width="match_parent"
-                        android:layout_height="48dp"
-                        android:layout_marginTop="5dp"
-                        android:background="@drawable/editdrawable"
-                        android:hint="E.g 123676"
-                        android:inputType="textCapCharacters"
-                        android:paddingStart="10dp"
-                        android:textColorHint="@color/gray" />
-
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=" Mark of compliance" />
-
-                    <androidx.appcompat.widget.AppCompatEditText
-                        android:id="@+id/manu_serial_number"
-                        android:layout_width="match_parent"
-                        android:layout_height="48dp"
-                        android:layout_marginTop="5dp"
-                        android:background="@drawable/editdrawable"
-                        android:hint="E.g 2015/2369"
-                        android:inputType="textCapCharacters"
-                        android:paddingStart="10dp"
-                        android:textColorHint="@color/gray" />
-
-                </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
@@ -376,7 +327,6 @@
                         android:hint="Location"
                         android:inputType="textMultiLine"
                         android:maxLines="2"
-                        android:minLines="2"
                         android:paddingStart="10dp"
                         android:textColorHint="@color/gray" />
 

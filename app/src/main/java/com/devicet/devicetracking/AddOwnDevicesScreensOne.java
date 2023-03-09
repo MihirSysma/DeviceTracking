@@ -60,6 +60,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.http.Field;
+import retrofit2.http.Header;
 
 public class AddOwnDevicesScreensOne extends AppCompatActivity implements
         AdapterView.OnItemSelectedListener {
@@ -69,14 +71,14 @@ public class AddOwnDevicesScreensOne extends AppCompatActivity implements
     static String strLat = "22.7196", strLng = "75.8577", netName, NetWStatusId, NetworkName;
     DatePickerDialog picker;
     LinearLayoutCompat lay_other, lay_add;
-    RecyclerView networkList,statusRecyclerview;
+    RecyclerView networkList, statusRecyclerview;
 
     List<GetDeviceSubList> getDeviceList;
     AlertDialog alertDialog;
     List<GetSubBrands> BList;
     List<GetModelSub> getModelSubList;
     StatsuAdapter statusAdapter;
-    AppCompatEditText etxImeiNumber, etxImeiNumber_2, etxSimNumber, etxOs, etxDt, etxGps, etxManuSerialNumber, etxMarkComplience, etxEmailId;
+    AppCompatEditText etxImeiNumber, etxImeiNumber_2, etxSimNumber, etxSimNumber_2, etxOs, etxDt, etxGps, etxManuSerialNumber, etxMarkComplience, etxEmailId;
     AppCompatSpinner etxModelName, etxDeviceType, etxMobileStatus;
     AppCompatTextView txtDeviceName, brand_txt, model_txt, network_text, network_text_2, mobile_status;
 
@@ -84,6 +86,7 @@ public class AddOwnDevicesScreensOne extends AppCompatActivity implements
     List<StatusModel> statusModelList;
     Double saveLatitude, saveLongitude;
     static int dId, bId, mmId;
+    static String mobileStatusId;
     TextView title;
     GPSTracker gps;
 
@@ -145,6 +148,7 @@ public class AddOwnDevicesScreensOne extends AppCompatActivity implements
         etxImeiNumber = findViewById(R.id.imei_number);
         etxImeiNumber_2 = findViewById(R.id.imei_number_2);
         etxSimNumber = findViewById(R.id.sim_number);
+        etxSimNumber_2 = findViewById(R.id.sim_number_2);
         etxOs = findViewById(R.id.operating_system);
         //   etxDt=findViewById(R.id.date_time);
         etxGps = findViewById(R.id.gps_location);
@@ -257,26 +261,29 @@ public class AddOwnDevicesScreensOne extends AppCompatActivity implements
                 Toast.makeText(AddOwnDevicesScreensOne.this, "Select Brand Type", Toast.LENGTH_SHORT).show();
             } else if (model_txt.getText().toString().isEmpty()) {
                 Toast.makeText(AddOwnDevicesScreensOne.this, "Select Model Type", Toast.LENGTH_SHORT).show();
-            }/*else if(etxImeiNumber.getText().toString().isEmpty()){
-               etxImeiNumber.setError("Field empty");
-           }*/ else if (etxSimNumber.getText().toString().isEmpty()) {
+            } else if (etxImeiNumber.getText().toString().isEmpty()) {
+                etxImeiNumber.setError("Field empty");
+            } else if (etxSimNumber.getText().toString().isEmpty()) {
                 etxSimNumber.setError("Field empty");
-            }/*else if(etxGps.getText().toString().isEmpty()){
+            } else if (etxGps.getText().toString().isEmpty()) {
                 etxGps.setError("Field empty");
-            }*/ else {
+            } else if (etxMarkComplience.getText().toString().isEmpty()) {
+                etxMarkComplience.setError("Field empty");
+            } else {
                 String imei = etxImeiNumber.getText().toString();
                 String imei2 = etxImeiNumber_2.getText().toString();
                 // msgAPi("msg");
 
-                Log.d("Data", "Valuess" + tk + "==" + Integer.parseInt(Uid) + "==" + txtDeviceName.getText().toString() + "==" +
-                        brand_txt.getText().toString() + "==" + model_txt.getText().toString() + "==" + NetworkName + "==" + imei +
-                        "==" + etxSimNumber.getText().toString() + "==" + etxGps.getText().toString() + "==" + etxManuSerialNumber.getText().toString() + "=="
-                        + etxOs.getText().toString() + "==" + strLat + "==" + strLng);
-                detectionPost(tk, Integer.parseInt(Uid), txtDeviceName.getText().toString(), brand_txt.getText().toString(), model_txt.getText().toString(), network_text.getText().toString(), imei,
-                        imei2, etxSimNumber.getText().toString(), etxGps.getText().toString(), etxManuSerialNumber.getText().toString(), etxOs.getText().toString(), strLat, strLng);
+                detectionPost(tk, brand_txt.getText().toString(), model_txt.getText().toString(), etxOs.getText().toString(),
+                        imei, imei2, strLat, strLng, Integer.parseInt(Uid), mobileStatusId, network_text.getText().toString(),
+                        network_text_2.getText().toString(), Integer.parseInt(etxSimNumber.getText().toString()),
+                        Integer.parseInt(etxSimNumber_2.getText().toString()), etxManuSerialNumber.getText().toString(),
+                        etxMarkComplience.getText().toString(), "", etxGps.getText().toString(), "1"
+                );
             }
         });
     }
+
     private void toStatusList(AppCompatTextView txt) {
 
         StatusModel statusModel = new StatusModel();
@@ -313,6 +320,7 @@ public class AddOwnDevicesScreensOne extends AppCompatActivity implements
         statusRecyclerview.setAdapter(statusAdapter);
 
     }
+
     class StatsuAdapter extends RecyclerView.Adapter<StatsuAdapter.MyStateHolder> {
 
         List<StatusModel> bList;
@@ -343,6 +351,7 @@ public class AddOwnDevicesScreensOne extends AppCompatActivity implements
                 final StatusModel deviveM = bList.get(position);
                 Log.d("TAG", "onClick: " + deviveM.getId() + "====" + deviveM.getName() + "===" + im + "====" + mfg);
                 alertDialog.dismiss();
+                mobileStatusId = deviveM.getId();
                 txt.setText(deviveM.getName());
             });
         }
@@ -381,12 +390,17 @@ public class AddOwnDevicesScreensOne extends AppCompatActivity implements
         alertDialog.show();
     }
 
-
-    private void detectionPost(String token, int strUId, String dOS, String brand, String model, String networkname, String imei, String imei2, String simN, String gpsL, String manuSerial, String deviceId, String lt, String lng) {
+    private void detectionPost(String auth, String device_brand, String device_model, String device_os,
+                               String imei, String imei_2, String detection_lat, String detection_long,
+                               int user_id, String status, String network_type_one,
+                               String networkType2, int network_sim_code,
+                               int network_sim_code_2, String manufacture_serial_number,
+                               String mark_of_compliance, String product_device_id, String address, String type) {
         Retrofit retrofit1 = RetrofitSingleton.getClient();
         final EndPoints requestInterface = retrofit1.create(EndPoints.class);
-        final Call<DetectionModel> headmodel = requestInterface.detections(token, brand, model, dOS, imei, imei2, lt, lng, strUId, "1", simN, manuSerial,
-                networkname, deviceId, gpsL, "1");
+        final Call<DetectionModel> headmodel = requestInterface.detections(auth, device_brand, device_model, device_os, imei, imei_2,
+                detection_lat, detection_long, user_id, status, network_type_one, networkType2, network_sim_code, network_sim_code_2, manufacture_serial_number,
+                mark_of_compliance, product_device_id, address, type);
         headmodel.enqueue(new Callback<DetectionModel>() {
             @Override
             public void onResponse(Call<DetectionModel> call, Response<DetectionModel> response) {
@@ -554,8 +568,6 @@ public class AddOwnDevicesScreensOne extends AppCompatActivity implements
             final TelephonyManager mTelephony = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
             if (mTelephony.getDeviceId() != null) {
                 imeiNumber = mTelephony.getDeviceId();
-
-
             } else {
                 imeiNumber = "imei";
                 Log.d("TAG", "getDeviceId_android_id: " + imeiNumber);

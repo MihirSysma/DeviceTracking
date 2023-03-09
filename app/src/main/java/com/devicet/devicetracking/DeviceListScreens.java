@@ -235,7 +235,6 @@ public class DeviceListScreens extends AppCompatActivity {
             }
 
             myViewHolder.status.setOnClickListener(v -> {
-                Log.i("TAG_MIHIR","On click of status");
                 BrandsPopup(strToken, 1, myViewHolder.status, demoModel.getImei(), demoModel.getMfgStatus(), demoModel.getType());
 
             });
@@ -534,7 +533,7 @@ public class DeviceListScreens extends AppCompatActivity {
         RetrofitSingleton.showDialog(DeviceListScreens.this);
         Retrofit retrofit1 = RetrofitSingleton.getClient();
         final EndPoints requestInterface = retrofit1.create(EndPoints.class);
-        final Call<UpdateStatus> headmodel = requestInterface.updatestatus(tk, uid, imei, lat, lng, address, status, type, mfg);
+        final Call<UpdateStatus> headmodel = requestInterface.updateStatus(tk, uid, imei, lat, lng, address, status, type, mfg);
         headmodel.enqueue(new Callback<UpdateStatus>() {
             @Override
             public void onResponse(Call<UpdateStatus> call, Response<UpdateStatus> response) {

@@ -85,7 +85,7 @@ public class AddAnotherMobileScreen extends AppCompatActivity implements
     AlertDialog alertDialog;
     List<GetSubBrands> BList;
     List<GetModelSub> getModelSubList;
-    AppCompatEditText etxImeiNumber, etxImeiNumber2, etxSimNumber, etxOs, etxDt, etxGps, etxManuSerialNumber, etxMarkComplience, etxEmailId;
+    AppCompatEditText etxImeiNumber, etxImeiNumber2, etxSimNumber, etxSimNumber2, etxOs, etxDt, etxGps, etxManuSerialNumber, etxMarkComplience, etxEmailId;
     AppCompatSpinner etxModelName, etxDeviceType;
 
     RecyclerView deviceRList, brandRecyclerview, modelRecyclerview;
@@ -99,6 +99,8 @@ public class AddAnotherMobileScreen extends AppCompatActivity implements
     TextView title;
     static int dId, bId;
     static String mobileStatusId, mobileStatuName;
+
+    NetworkAdapter networkAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -157,12 +159,17 @@ public class AddAnotherMobileScreen extends AppCompatActivity implements
         etxManuSerialNumber = findViewById(R.id.manu_serial_number);
         etxMarkComplience = findViewById(R.id.mark_of_comp);
         etxEmailId = findViewById(R.id.email_id);
+        etxSimNumber = findViewById(R.id.sim_number);
+        etxSimNumber2 = findViewById(R.id.sim_number_2);
 
         network_text1 = findViewById(R.id.network_text);
-        network_text1.setOnClickListener(v -> StatusPopup(network_text1));
+        network_text1.setOnClickListener(v -> NetWorkPopup(network_text1));
 
         network_text2 = findViewById(R.id.network_text_2);
-        network_text2.setOnClickListener(v -> StatusPopup(network_text2));
+        network_text2.setOnClickListener(v -> NetWorkPopup(network_text2));
+
+        etxImeiNumber = findViewById(R.id.imei_number);
+        etxImeiNumber2 = findViewById(R.id.imei_number_2);
 
         // etxModelName = findViewById(R.id.model_name);
         //  etxDeviceType=findViewById(R.id.device_type);
@@ -255,23 +262,26 @@ public class AddAnotherMobileScreen extends AppCompatActivity implements
                 etxGps.setError("Field empty");
             } else {
                 String imei = etxImeiNumber.getText().toString();
-                Log.d("TAG", "AddDevice: " + tk + "===" + Integer.parseInt(Uid) + "===" + imei + "===" + etxSimNumber.getText().toString() + "===" + spinOsType + "===" + etxDt.getText().toString() + "==="
-                        + etxGps.getText().toString() + "===" + spinBrandType + "===" + spinModelType + "===" + etxManuSerialNumber.getText().toString() + "===" + etxEmailId.getText().toString() + "===" + etxMarkComplience.getText().toString());
+                String imei2 = etxImeiNumber2.getText().toString();
 
-                detectionPost(tk, Integer.parseInt(Uid), "lpshfg", etxSimNumber.getText().toString(), spinOsType, etxGps.getText().toString(), spinBrandType,
-                        spinModelType, etxManuSerialNumber.getText().toString(), etxMarkComplience.getText().toString(), mobileStatusId, etxOs.getText().toString());
+                detectionPost(tk, brand_txt.getText().toString(), model_txt.getText().toString(), etxOs.getText().toString(), imei, imei2, strLat, strLng, Integer.parseInt(Uid),
+                        mobileStatusId, network_text1.getText().toString(), network_text2.getText().toString(), Integer.parseInt(etxSimNumber.getText().toString()),
+                        Integer.parseInt(etxSimNumber2.getText().toString()), etxManuSerialNumber.getText().toString(), etxMarkComplience.getText().toString(), "", etxGps.getText().toString(), "2");
             }
         });
     }
 
-    private void detectionPost(String token, int strUId, String imei, String simnumber, String strOs, String gps, String brandName, String ModelName, String manuSerial, String markComplience, String mobileStatus, String DId) {
+    private void detectionPost(String auth, String device_brand, String device_model, String device_os,
+                               String imei, String imei_2, String detection_lat, String detection_long,
+                               int user_id, String status, String network_type_one,
+                               String networkType2, int network_sim_code,
+                               int network_sim_code_2, String manufacture_serial_number,
+                               String mark_of_compliance, String product_device_id, String address, String type) {
         Retrofit retrofit1 = RetrofitSingleton.getClient();
         final EndPoints requestInterface = retrofit1.create(EndPoints.class);
-        Log.d("TAG", "AddDevice: " + token + "===" + brandName + "===" + ModelName + "===" + strOs + "===" + imei + "===" + strUId + "==="
-                + mobileStatus + "===" + simnumber + "===" + manuSerial + "===" + markComplience + "===" + DId + "===" + gps + "===" + 2);
-
-        final Call<DetectionModel> headmodel = requestInterface.detections(token, brandName, ModelName, strOs, imei, "", "33.33",
-                "22.30", strUId, mobileStatus, simnumber, manuSerial, markComplience, DId, gps, "2");
+        final Call<DetectionModel> headmodel = requestInterface.detections(auth, device_brand, device_model, device_os, imei, imei_2,
+                detection_lat, detection_long, user_id, status, network_type_one, networkType2, network_sim_code, network_sim_code_2, manufacture_serial_number,
+                mark_of_compliance, product_device_id, address, type);
         headmodel.enqueue(new Callback<DetectionModel>() {
             @Override
             public void onResponse(Call<DetectionModel> call, Response<DetectionModel> response) {
@@ -872,6 +882,110 @@ public class AddAnotherMobileScreen extends AppCompatActivity implements
         statusRecyclerview.setLayoutManager(new LinearLayoutManager(AddAnotherMobileScreen.this));
         statusRecyclerview.addItemDecoration(new DividerItemDecoration(statusRecyclerview.getContext(), DividerItemDecoration.VERTICAL));
         toList(txt);
+        dialog.setView(vieww);
+        dialog.setCancelable(true);
+        alertDialog = dialog.create();
+        alertDialog.show();
+    }
+
+    private void toNetworkList(AppCompatTextView txt) {
+
+        StatusModel statusModel = new StatusModel();
+        statusModel.setId("1");
+        statusModel.setName("MTN");
+        statusModelList.add(statusModel);
+
+        StatusModel statusModel1 = new StatusModel();
+        statusModel1.setId("2");
+        statusModel1.setName("Cell C");
+        statusModelList.add(statusModel1);
+
+        StatusModel statusModel2 = new StatusModel();
+        statusModel2.setId("3");
+        statusModel2.setName("Vodacom");
+        statusModelList.add(statusModel2);
+
+        StatusModel statusModel3 = new StatusModel();
+        statusModel3.setId("4");
+        statusModel3.setName("Telkom");
+        statusModelList.add(statusModel3);
+
+        StatusModel statusModel4 = new StatusModel();
+        statusModel4.setId("5");
+        statusModel4.setName("Other");
+        statusModelList.add(statusModel4);
+
+        networkAdapter = new NetworkAdapter(statusModelList, getApplicationContext(), txt);
+        networkList.setAdapter(networkAdapter);
+
+
+    }
+
+    class NetworkAdapter extends RecyclerView.Adapter<NetworkAdapter.MyStateHolder> {
+
+        List<StatusModel> bList;
+        Context context;
+        AppCompatTextView txt;
+        String im, mfg;
+
+        public NetworkAdapter(List<StatusModel> deviceList, Context context, AppCompatTextView txt) {
+            this.bList = deviceList;
+            this.context = context;
+            this.txt = txt;
+        }
+
+        @NonNull
+        @Override
+        public NetworkAdapter.MyStateHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View v = LayoutInflater.from(getApplicationContext()).inflate(R.layout.status_itemss, parent, false);
+            return new NetworkAdapter.MyStateHolder(v);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull NetworkAdapter.MyStateHolder holder, @SuppressLint("RecyclerView") int position) {
+            final StatusModel gd = bList.get(position);
+            holder.device_name.setText(gd.getName());
+
+            holder.select_device.setOnClickListener(view -> {
+                final StatusModel deviveM = bList.get(position);
+                Log.d("TAG", "onClick: " + deviveM.getId() + "====" + deviveM.getName() + "===" + im + "====" + mfg);
+                alertDialog.dismiss();
+                txt.setText(deviveM.getName());
+
+            });
+
+
+        }
+
+        @Override
+        public int getItemCount() {
+            return bList.size();
+        }
+
+        class MyStateHolder extends RecyclerView.ViewHolder {
+            TextView device_name;
+            LinearLayoutCompat select_device;
+
+            public MyStateHolder(@NonNull View itemView) {
+                super(itemView);
+                device_name = itemView.findViewById(R.id.brands_name);
+                select_device = itemView.findViewById(R.id.select_brands);
+
+            }
+        }
+    }
+
+
+    private void NetWorkPopup(AppCompatTextView txt) {
+        statusModelList.clear();
+        AlertDialog.Builder dialog = new AlertDialog.Builder(AddAnotherMobileScreen.this);
+        dialog.setCancelable(true);
+        LayoutInflater inflater = getLayoutInflater();
+        final View vieww = inflater.inflate(R.layout.device_dialog, null);
+        networkList = vieww.findViewById(R.id.device_list);
+        networkList.setLayoutManager(new LinearLayoutManager(AddAnotherMobileScreen.this));
+        networkList.addItemDecoration(new DividerItemDecoration(networkList.getContext(), DividerItemDecoration.VERTICAL));
+        toNetworkList(txt);
         dialog.setView(vieww);
         dialog.setCancelable(true);
         alertDialog = dialog.create();

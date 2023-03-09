@@ -2,7 +2,6 @@ package com.devicet.devicetracking;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
@@ -25,11 +24,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.DatePicker;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatEditText;
@@ -46,7 +42,6 @@ import com.devicet.devicetracking.Models.DetectionModel;
 import com.devicet.devicetracking.Models.GetBrands;
 import com.devicet.devicetracking.Models.GetDevice;
 import com.devicet.devicetracking.Models.GetDeviceSubList;
-import com.devicet.devicetracking.Models.GetDeviceSubModel;
 import com.devicet.devicetracking.Models.GetModel;
 import com.devicet.devicetracking.Models.GetModelSub;
 import com.devicet.devicetracking.Models.GetSubBrands;
@@ -54,19 +49,15 @@ import com.devicet.devicetracking.Models.StatusModel;
 import com.devicet.devicetracking.Utils.EndPoints;
 import com.devicet.devicetracking.Utils.RetrofitSingleton;
 import com.devicet.devicetracking.Utils.SharedPreferenceHelper;
-import com.devicet.devicetracking.Utils.isEmailValid;
-
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -91,7 +82,6 @@ public class AddAnotherDevicesScreensOne extends AppCompatActivity implements
     List<GetSubBrands> BList;
     List<GetModelSub> getModelSubList;
     AppCompatEditText etxImeiNumber, etxImeiNumber_2, etxSimNumber, etxOs, etxDt, etxGps, etxManuSerialNumber, etxMarkComplience, etxEmailId;
-    AppCompatSpinner etxModelName, etxDeviceType;
 
     RecyclerView deviceRList, brandRecyclerview, modelRecyclerview;
     DeviceAdapter deviceAdapter;
@@ -99,7 +89,6 @@ public class AddAnotherDevicesScreensOne extends AppCompatActivity implements
     ModelAdapter modelAdapter;
     AppCompatTextView txtDeviceName, brand_txt, model_txt, txt_mobile_status_name;
     LinearLayoutCompat imeiLy, imei_ly2;
-
 
     static int dId, bId;
     static String mobileStatusId, mobileStatuName;
@@ -154,7 +143,7 @@ public class AddAnotherDevicesScreensOne extends AppCompatActivity implements
         etxOs = findViewById(R.id.operating_system);
         etxDt = findViewById(R.id.date_time);
         etxGps = findViewById(R.id.gps_location);
-        etxManuSerialNumber = findViewById(R.id.manu_serial_number);
+        etxManuSerialNumber = findViewById(R.id.maf_number);
         etxMarkComplience = findViewById(R.id.mark_of_comp);
         etxEmailId = findViewById(R.id.email_id);
 
@@ -241,43 +230,32 @@ public class AddAnotherDevicesScreensOne extends AppCompatActivity implements
                 Toast.makeText(AddAnotherDevicesScreensOne.this, "Select Model Type", Toast.LENGTH_SHORT).show();
             } else if (txt_mobile_status_name.getText().toString().isEmpty()) {
                 Toast.makeText(AddAnotherDevicesScreensOne.this, "Select Mobile Status", Toast.LENGTH_SHORT).show();
-            } else if (etxSimNumber.getText().toString().isEmpty()) {
-                etxSimNumber.setError("Field empty");
-            } else if (etxOs.getText().toString().isEmpty()) {
-                etxOs.setError("Field empty");
             } else if (etxManuSerialNumber.getText().toString().isEmpty()) {
+                Toast.makeText(AddAnotherDevicesScreensOne.this, "Enter manufacturing serial", Toast.LENGTH_SHORT).show();
                 etxManuSerialNumber.setError("Field empty");
             } else if (etxMarkComplience.getText().toString().isEmpty()) {
+                Toast.makeText(AddAnotherDevicesScreensOne.this, "Enter mark of compliance", Toast.LENGTH_SHORT).show();
                 etxMarkComplience.setError("Field empty");
-            } else if (etxDt.getText().toString().isEmpty()) {
-                etxDt.setError("Field empty");
             } else if (etxGps.getText().toString().isEmpty()) {
+                Toast.makeText(AddAnotherDevicesScreensOne.this, "Enter location details", Toast.LENGTH_SHORT).show();
                 etxGps.setError("Field empty");
             } else {
-                String imei = etxImeiNumber.getText().toString();
-                String imei_2 = etxImeiNumber_2.getText().toString();
-
-                Log.d("TAG", "AddDevice: " + tk + "===" + Integer.parseInt(Uid) + "===" + imei + "===" + etxSimNumber.getText().toString() + "===" + spinOsType + "===" + etxDt.getText().toString() + "==="
-                        + etxGps.getText().toString() + "===" + spinBrandType + "===" + spinModelType + "===" + etxManuSerialNumber.getText().toString() + "===" + etxEmailId.getText().toString() + "===" + etxMarkComplience.getText().toString());
-
-                detectionPost(tk, Integer.parseInt(Uid), imei, imei_2, etxSimNumber.getText().toString(), spinOsType, etxGps.getText().toString(), spinBrandType,
+                detectionPost(tk, Integer.parseInt(Uid),spinOsType, etxGps.getText().toString(), spinBrandType,
                         spinModelType, etxManuSerialNumber.getText().toString(), etxMarkComplience.getText().toString(), mobileStatusId, etxOs.getText().toString());
             }
         });
     }
 
-    private void detectionPost(String token, int strUId, String imei, String imei_2, String simnumber, String strOs, String gps, String brandName, String ModelName, String manuSerial, String markComplience, String mobileStatus, String DId) {
+    private void detectionPost(String token, int strUId, String strOs, String gps, String brandName, String ModelName, String manuSerial, String markComplience, String mobileStatus, String DId) {
         Retrofit retrofit1 = RetrofitSingleton.getClient();
         final EndPoints requestInterface = retrofit1.create(EndPoints.class);
-        Log.d("TAG", "AddDevice: " + token + "===" + brandName + "===" + ModelName + "===" + strOs + "===" + imei + "===" + strUId + "==="
-                + mobileStatus + "===" + simnumber + "===" + manuSerial + "===" + markComplience + "===" + DId + "===" + gps + "===" + 2);
-
-        final Call<DetectionModel> headmodel = requestInterface.detections(token, brandName, ModelName, strOs, imei, imei_2, "33.33",
-                "22.30", strUId, mobileStatus, simnumber, manuSerial, markComplience, DId, gps, "2");
+        final Call<DetectionModel> headmodel = requestInterface.detectionOtherDevice(token, brandName, ModelName, strOs,  "33.33",
+                "22.30", strUId, mobileStatus, manuSerial, markComplience, DId, gps, "3");
         headmodel.enqueue(new Callback<DetectionModel>() {
             @Override
             public void onResponse(Call<DetectionModel> call, Response<DetectionModel> response) {
                 try {
+                    Toast.makeText(AddAnotherDevicesScreensOne.this, "Submit works", Toast.LENGTH_SHORT).show();
                     if (response.body() != null) {
                         String msg = response.body().getApiMessage();
                         int status = response.body().getApiStatus();
@@ -307,8 +285,6 @@ public class AddAnotherDevicesScreensOne extends AppCompatActivity implements
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         // mobileStatusId=mobielStatus[parent.getSelectedItemPosition()];
-
-
     }
 
     @Override
