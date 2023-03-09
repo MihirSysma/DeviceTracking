@@ -44,12 +44,7 @@ public class SplashScreen extends AppCompatActivity {
 
         key=SharedPreferenceHelper.getKey(SplashScreen.this,"key","0");
         if(InternetStatus.getInternetStatus(SplashScreen.this).getCheckInternet()){
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    registerMethod("027763d9f25fbf14f9e4869fbda1f789");
-                }
-            }, 2*1000);
+            new Handler().postDelayed(() -> registerMethod("027763d9f25fbf14f9e4869fbda1f789"), 2*1000);
         }else {
             Toast.makeText(SplashScreen.this, "Connect WI-FI/ Internet. Try Again", Toast.LENGTH_SHORT).show();
         }

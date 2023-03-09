@@ -405,33 +405,6 @@
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
-                    android:id="@+id/device_ly"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:orientation="vertical">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=" Device Id" />
-
-                    <androidx.appcompat.widget.AppCompatEditText
-                        android:id="@+id/operating_system"
-                        android:layout_width="match_parent"
-                        android:layout_height="48dp"
-                        android:layout_marginTop="5dp"
-                        android:background="@drawable/editdrawable"
-                        android:digits="1234567890"
-                        android:hint="E.g 123..15"
-                        android:inputType="number"
-                        android:maxLength="15"
-                        android:paddingStart="10dp"
-                        android:textColorHint="@color/gray" />
-
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"

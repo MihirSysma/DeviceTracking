@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -273,18 +274,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:textAlignment="gravity"
                 android:focusableInTouchMode="false"
                 android:text="Other"
-                android:textSize="12dp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/mobile_statuss"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawableRight="@drawable/ic_baseline_arrow_drop_down_24"
                 android:textSize="14dp"
-                android:visibility="gone" />
+                android:textStyle="bold"
+                app:drawableRightCompat="@drawable/ic_baseline_arrow_drop_down_24" />
+
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -312,7 +309,6 @@
             android:layout_marginLeft="5dp"
             android:padding="5dp"
             android:text="Address not found"
-
             android:textColor="@color/gray"
             android:textSize="14dp" />
 

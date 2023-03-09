@@ -88,10 +88,7 @@ public interface EndPoints {
     @FormUrlEncoded
     @POST(ApiConstants.UPDATE_STATUS)
     Call<UpdateStatus> updateStatus(@Header("authorization") String auth, @Field("user_id") String user_id,
-                                    @Field("imei") String imei, @Field("detection_lat") String detection_lat,
-                                    @Field("detection_long") String detection_long, @Field("address") String address,
-                                    @Field("status") String status, @Field("type") String type,
-                                    @Field("mfg_status") String mfg_status
+                                    @Field("product_device_id") int id, @Field("status") String status, @Field("mfg_status") String mfgStatus
     );
 
 }

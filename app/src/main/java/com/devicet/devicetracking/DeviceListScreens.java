@@ -83,8 +83,7 @@ public class DeviceListScreens extends AppCompatActivity {
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
-        demoModelList = new ArrayList<GetDeviceModel>();
-        rvDeviceList = (RecyclerView) findViewById(R.id.rv_list);
+        rvDeviceList = findViewById(R.id.rv_list);
         rvDeviceList.setLayoutManager(new LinearLayoutManager(this));
 
 
@@ -195,7 +194,6 @@ public class DeviceListScreens extends AppCompatActivity {
             myViewHolder.address.setText(demoModel.getAddress());
             myViewHolder.manuf.setText(demoModel.getManufactureSerialNumber());
             myViewHolder.mark.setText(demoModel.getMarkOfCompliance());
-            myViewHolder.mobile_statuss.setVisibility(View.GONE);
 
             /* myViewHolder.device_id.setText(demoModel.getProductDeviceId());
 
@@ -213,9 +211,7 @@ public class DeviceListScreens extends AppCompatActivity {
 
             if (demoModel.getType().equals("1")) {
                 myViewHolder.typess.setText("Current Device");
-                myViewHolder.status.setFocusableInTouchMode(true);
-                myViewHolder.mobile_statuss.setVisibility(View.VISIBLE);
-                myViewHolder.mark_text.setText("Network name");
+                //myViewHolder.mark_text.setText("Network name");
             } else {
                 myViewHolder.typess.setVisibility(View.GONE);
             }
@@ -234,10 +230,7 @@ public class DeviceListScreens extends AppCompatActivity {
                 myViewHolder.status.setText("Damaged");
             }
 
-            myViewHolder.status.setOnClickListener(v -> {
-                BrandsPopup(strToken, 1, myViewHolder.status, demoModel.getImei(), demoModel.getMfgStatus(), demoModel.getType());
-
-            });
+            myViewHolder.status.setOnClickListener(v -> StatusPopup(strToken, 1, myViewHolder.status, demoModel.getImei(), demoModel.getMfgStatus(), demoModel.getType(), demoModel.getId()));
             /* if(demoModel.getStatus().equals("1")){
                 myViewHolder.status.setText("Active");
             }else if(demoModel.getStatus().equals("2")){
@@ -245,7 +238,8 @@ public class DeviceListScreens extends AppCompatActivity {
             }else{
                 myViewHolder.status.setText("Stolen");
             }*/
-
+            myViewHolder.simNumber.setText(demoModel.getNetworkSimCode());
+            myViewHolder.device_id.setText(String.valueOf(demoModel.getId()));
 
         }
 
@@ -256,7 +250,6 @@ public class DeviceListScreens extends AppCompatActivity {
 
         class MyViewHolder extends RecyclerView.ViewHolder {
             TextView device_id, mark_text, deviceName, imei, deviceOs, model, status, address, manuf, mark, detection_date, typess, simNumber;
-            TextView mobile_statuss;
             LinearLayoutCompat simLay, imeiLay, deviceLay;
 
             public MyViewHolder(@NonNull View itemView) {
@@ -271,7 +264,6 @@ public class DeviceListScreens extends AppCompatActivity {
                 deviceOs = itemView.findViewById(R.id.device);
                 model = itemView.findViewById(R.id.model);
                 status = itemView.findViewById(R.id.status);
-                mobile_statuss = itemView.findViewById(R.id.mobile_statuss);
 
                 simNumber = itemView.findViewById(R.id.sim_number_items);
                 simLay = itemView.findViewById(R.id.sim_lay);
@@ -407,7 +399,7 @@ public class DeviceListScreens extends AppCompatActivity {
         });
     }
 
-    private void BrandsPopup(String tk, int id, TextView setStatus, String imei, String mfg, String type) {
+    private void StatusPopup(String tk, int id, TextView setStatus, String imei, String mfg, String type, int deviceId) {
         statusModelList.clear();
         AlertDialog.Builder dialog = new AlertDialog.Builder(DeviceListScreens.this);
         dialog.setCancelable(true);
@@ -416,14 +408,14 @@ public class DeviceListScreens extends AppCompatActivity {
         statusRecyclerview = vieww.findViewById(R.id.device_list);
         statusRecyclerview.setLayoutManager(new LinearLayoutManager(DeviceListScreens.this));
         statusRecyclerview.addItemDecoration(new DividerItemDecoration(statusRecyclerview.getContext(), DividerItemDecoration.VERTICAL));
-        toList(setStatus, imei, mfg, type);
+        toList(setStatus, imei, mfg, type, deviceId);
         dialog.setView(vieww);
         dialog.setCancelable(true);
         alertDialog = dialog.create();
         alertDialog.show();
     }
 
-    private void toList(TextView setStatus, String imei, String mfg, String type) {
+    private void toList(TextView setStatus, String imei, String mfg, String type, int deviceId) {
 
         StatusModel statusModel = new StatusModel();
         statusModel.setId("1");
@@ -455,7 +447,7 @@ public class DeviceListScreens extends AppCompatActivity {
         statusModel5.setName("DAMAGED");
         statusModelList.add(statusModel5);
 
-        statusAdapter = new StatsuAdapter(statusModelList, getApplicationContext(), setStatus, imei, mfg, type);
+        statusAdapter = new StatsuAdapter(statusModelList, getApplicationContext(), setStatus, imei, mfg, type, deviceId);
         statusRecyclerview.setAdapter(statusAdapter);
 
     }
@@ -467,13 +459,16 @@ public class DeviceListScreens extends AppCompatActivity {
         TextView stxtView;
         String im, mfg, type;
 
-        public StatsuAdapter(List<StatusModel> deviceList, Context context, TextView stxtView, String im, String mfg, String type) {
+        int deviceId;
+
+        public StatsuAdapter(List<StatusModel> deviceList, Context context, TextView stxtView, String im, String mfg, String type, int deviceId) {
             this.bList = deviceList;
             this.context = context;
             this.stxtView = stxtView;
             this.im = im;
             this.mfg = mfg;
             this.type = type;
+            this.deviceId = deviceId;
         }
 
         @NonNull
@@ -493,11 +488,11 @@ public class DeviceListScreens extends AppCompatActivity {
                 GPSTracker gps = new GPSTracker(DeviceListScreens.this);
                 Log.d("TAG", "onClick: " + deviveM.getId() + "====" + deviveM.getName() + "===" + im + "====" + mfg + gps.latitude + gps.longitude + gps.getAddressLine(DeviceListScreens.this));
                 if (gps.getAddressLine(DeviceListScreens.this) == null) {
-                    String address =  "null";
+                    String address = "null";
                 } else {
-                    String address =  gps.getAddressLine(DeviceListScreens.this);
+                    String address = gps.getAddressLine(DeviceListScreens.this);
                 }
-                statusUpdate(strToken, Uid, im, String.valueOf(gps.latitude), String.valueOf(gps.longitude), "address", deviveM.getId(), type, mfg);
+                statusUpdate(strToken, Uid, deviceId ,deviveM.getId(),mfg);
                 alertDialog.dismiss();
                 stxtView.setText(deviveM.getName());
 
@@ -529,15 +524,14 @@ public class DeviceListScreens extends AppCompatActivity {
         RetrofitSingleton.hideDialog();
     }
 
-    private void statusUpdate(String tk, String uid, String imei, String lat, String lng, String address, String status, String type, String mfg) {
+    private void statusUpdate(String tk, String uid, int deviceId, String status, String mfgStatus) {
         RetrofitSingleton.showDialog(DeviceListScreens.this);
         Retrofit retrofit1 = RetrofitSingleton.getClient();
         final EndPoints requestInterface = retrofit1.create(EndPoints.class);
-        final Call<UpdateStatus> headmodel = requestInterface.updateStatus(tk, uid, imei, lat, lng, address, status, type, mfg);
+        final Call<UpdateStatus> headmodel = requestInterface.updateStatus(tk, uid, deviceId, status, mfgStatus);
         headmodel.enqueue(new Callback<UpdateStatus>() {
             @Override
             public void onResponse(Call<UpdateStatus> call, Response<UpdateStatus> response) {
-                Log.i("TAG_MIHIR",response.toString());
                 if (response.code() == 403) {
                     RetrofitSingleton.hideDialog();
                     String msg = "Having some issues from the server. Re-open the application";

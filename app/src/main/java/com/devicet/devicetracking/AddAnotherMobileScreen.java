@@ -85,7 +85,7 @@ public class AddAnotherMobileScreen extends AppCompatActivity implements
     AlertDialog alertDialog;
     List<GetSubBrands> BList;
     List<GetModelSub> getModelSubList;
-    AppCompatEditText etxImeiNumber, etxImeiNumber2, etxSimNumber, etxSimNumber2, etxOs, etxDt, etxGps, etxManuSerialNumber, etxMarkComplience, etxEmailId;
+    AppCompatEditText etxImeiNumber, etxImeiNumber2, etxSimNumber, etxSimNumber2, etxDt, etxGps, etxManuSerialNumber, etxMarkComplience, etxEmailId;
     AppCompatSpinner etxModelName, etxDeviceType;
 
     RecyclerView deviceRList, brandRecyclerview, modelRecyclerview;
@@ -120,9 +120,6 @@ public class AddAnotherMobileScreen extends AppCompatActivity implements
         mobile_status_hint = findViewById(R.id.mobile_status_hint);
         mobile_status_hint.setText("Status");
 
-        deviceLy = findViewById(R.id.device_ly);
-        deviceLy.setVisibility(View.GONE);
-
         title = findViewById(R.id.title_name);
         title.setText("Add another mobile device");
         findViewById(R.id.back).setOnClickListener(v -> finish());
@@ -152,8 +149,6 @@ public class AddAnotherMobileScreen extends AppCompatActivity implements
             Toast.makeText(this, "Please try again. Something went wrong", Toast.LENGTH_SHORT).show();
         }
 
-        etxOs = findViewById(R.id.operating_system);
-        etxOs.setVisibility(View.GONE);
         etxDt = findViewById(R.id.date_time);
         etxGps = findViewById(R.id.gps_location);
         etxManuSerialNumber = findViewById(R.id.manu_serial_number);
@@ -264,7 +259,7 @@ public class AddAnotherMobileScreen extends AppCompatActivity implements
                 String imei = etxImeiNumber.getText().toString();
                 String imei2 = etxImeiNumber2.getText().toString();
 
-                detectionPost(tk, brand_txt.getText().toString(), model_txt.getText().toString(), etxOs.getText().toString(), imei, imei2, strLat, strLng, Integer.parseInt(Uid),
+                detectionPost(tk, brand_txt.getText().toString(), model_txt.getText().toString(), txtDeviceName.getText().toString(), imei, imei2, strLat, strLng, Integer.parseInt(Uid),
                         mobileStatusId, network_text1.getText().toString(), network_text2.getText().toString(), Integer.parseInt(etxSimNumber.getText().toString()),
                         Integer.parseInt(etxSimNumber2.getText().toString()), etxManuSerialNumber.getText().toString(), etxMarkComplience.getText().toString(), "", etxGps.getText().toString(), "2");
             }

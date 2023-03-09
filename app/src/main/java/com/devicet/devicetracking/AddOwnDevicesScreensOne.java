@@ -78,7 +78,7 @@ public class AddOwnDevicesScreensOne extends AppCompatActivity implements
     List<GetSubBrands> BList;
     List<GetModelSub> getModelSubList;
     StatsuAdapter statusAdapter;
-    AppCompatEditText etxImeiNumber, etxImeiNumber_2, etxSimNumber, etxSimNumber_2, etxOs, etxDt, etxGps, etxManuSerialNumber, etxMarkComplience, etxEmailId;
+    AppCompatEditText etxImeiNumber, etxImeiNumber_2, etxSimNumber, etxSimNumber_2, etxDt, etxGps, etxManuSerialNumber, etxMarkComplience, etxEmailId;
     AppCompatSpinner etxModelName, etxDeviceType, etxMobileStatus;
     AppCompatTextView txtDeviceName, brand_txt, model_txt, network_text, network_text_2, mobile_status;
 
@@ -149,7 +149,6 @@ public class AddOwnDevicesScreensOne extends AppCompatActivity implements
         etxImeiNumber_2 = findViewById(R.id.imei_number_2);
         etxSimNumber = findViewById(R.id.sim_number);
         etxSimNumber_2 = findViewById(R.id.sim_number_2);
-        etxOs = findViewById(R.id.operating_system);
         //   etxDt=findViewById(R.id.date_time);
         etxGps = findViewById(R.id.gps_location);
         etxManuSerialNumber = findViewById(R.id.manu_serial_number);
@@ -234,7 +233,6 @@ public class AddOwnDevicesScreensOne extends AppCompatActivity implements
         //   etxSimNumber.setText(sim);
         brand_txt.setText(Build.BRAND);
         model_txt.setText(Build.MODEL);
-        etxOs.setText(dvId);
         etxManuSerialNumber.setText(Build.ID);
 
 
@@ -274,7 +272,7 @@ public class AddOwnDevicesScreensOne extends AppCompatActivity implements
                 String imei2 = etxImeiNumber_2.getText().toString();
                 // msgAPi("msg");
 
-                detectionPost(tk, brand_txt.getText().toString(), model_txt.getText().toString(), etxOs.getText().toString(),
+                detectionPost(tk, brand_txt.getText().toString(), model_txt.getText().toString(), txtDeviceName.getText().toString(),
                         imei, imei2, strLat, strLng, Integer.parseInt(Uid), mobileStatusId, network_text.getText().toString(),
                         network_text_2.getText().toString(), Integer.parseInt(etxSimNumber.getText().toString()),
                         Integer.parseInt(etxSimNumber_2.getText().toString()), etxManuSerialNumber.getText().toString(),
@@ -671,15 +669,12 @@ public class AddOwnDevicesScreensOne extends AppCompatActivity implements
         closeBtn.setTextColor(getColor(R.color.purple_500));
         closeBtn.setText("Got it");
         closeBtn.setGravity(Gravity.CENTER);
-        closeBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alertDialog.dismiss();
-                Intent i = new Intent(AddOwnDevicesScreensOne.this, DeviceListScreens.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i);
-                finish();
-            }
+        closeBtn.setOnClickListener(v -> {
+            alertDialog.dismiss();
+            Intent i = new Intent(AddOwnDevicesScreensOne.this, DeviceListScreens.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(i);
+            finish();
         });
         dialog.setView(vieww);
         dialog.setCancelable(true);

@@ -4,6 +4,10 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class GetDeviceSubModel {
+
+    @SerializedName("id")
+    @Expose
+    private int id;
     @SerializedName("imei")
     @Expose
     private String imei;
@@ -73,6 +77,10 @@ public class GetDeviceSubModel {
     public void setMarkOfCompliance(String markOfCompliance) {
         this.markOfCompliance = markOfCompliance;
     }
+
+    public void setId(int id) { this.id = id;}
+
+    public int getId() { return id;}
 
     public String getBrandName() {
         return brandName;

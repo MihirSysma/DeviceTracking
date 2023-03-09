@@ -26,6 +26,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatEditText;
@@ -49,6 +50,7 @@ import com.devicet.devicetracking.Models.StatusModel;
 import com.devicet.devicetracking.Utils.EndPoints;
 import com.devicet.devicetracking.Utils.RetrofitSingleton;
 import com.devicet.devicetracking.Utils.SharedPreferenceHelper;
+
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -58,6 +60,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -222,34 +225,35 @@ public class AddAnotherDevicesScreensOne extends AppCompatActivity implements
         // etxManuSerialNumber.setText(Build.SERIAL);
 
         findViewById(R.id.submit_add_device).setOnClickListener(v -> {
-            if (txtDeviceName.getText().toString().isEmpty()) {
-                Toast.makeText(AddAnotherDevicesScreensOne.this, "Select Device Type", Toast.LENGTH_SHORT).show();
-            } else if (brand_txt.getText().toString().isEmpty()) {
-                Toast.makeText(AddAnotherDevicesScreensOne.this, "Select Brand Type", Toast.LENGTH_SHORT).show();
-            } else if (model_txt.getText().toString().isEmpty()) {
-                Toast.makeText(AddAnotherDevicesScreensOne.this, "Select Model Type", Toast.LENGTH_SHORT).show();
-            } else if (txt_mobile_status_name.getText().toString().isEmpty()) {
-                Toast.makeText(AddAnotherDevicesScreensOne.this, "Select Mobile Status", Toast.LENGTH_SHORT).show();
-            } else if (etxManuSerialNumber.getText().toString().isEmpty()) {
-                Toast.makeText(AddAnotherDevicesScreensOne.this, "Enter manufacturing serial", Toast.LENGTH_SHORT).show();
-                etxManuSerialNumber.setError("Field empty");
-            } else if (etxMarkComplience.getText().toString().isEmpty()) {
-                Toast.makeText(AddAnotherDevicesScreensOne.this, "Enter mark of compliance", Toast.LENGTH_SHORT).show();
-                etxMarkComplience.setError("Field empty");
-            } else if (etxGps.getText().toString().isEmpty()) {
-                Toast.makeText(AddAnotherDevicesScreensOne.this, "Enter location details", Toast.LENGTH_SHORT).show();
-                etxGps.setError("Field empty");
-            } else {
-                detectionPost(tk, Integer.parseInt(Uid),spinOsType, etxGps.getText().toString(), spinBrandType,
-                        spinModelType, etxManuSerialNumber.getText().toString(), etxMarkComplience.getText().toString(), mobileStatusId, etxOs.getText().toString());
-            }
-        });
+                    if (txtDeviceName.getText().toString().isEmpty()) {
+                        Toast.makeText(AddAnotherDevicesScreensOne.this, "Select Device Type", Toast.LENGTH_SHORT).show();
+                    } else if (brand_txt.getText().toString().isEmpty()) {
+                        Toast.makeText(AddAnotherDevicesScreensOne.this, "Select Brand Type", Toast.LENGTH_SHORT).show();
+                    } else if (model_txt.getText().toString().isEmpty()) {
+                        Toast.makeText(AddAnotherDevicesScreensOne.this, "Select Model Type", Toast.LENGTH_SHORT).show();
+                    } else if (txt_mobile_status_name.getText().toString().isEmpty()) {
+                        Toast.makeText(AddAnotherDevicesScreensOne.this, "Select Mobile Status", Toast.LENGTH_SHORT).show();
+                    } else if (etxManuSerialNumber.getText().toString().isEmpty()) {
+                        Toast.makeText(AddAnotherDevicesScreensOne.this, "Enter manufacturing serial", Toast.LENGTH_SHORT).show();
+                        etxManuSerialNumber.setError("Field empty");
+                    } else if (etxMarkComplience.getText().toString().isEmpty()) {
+                        Toast.makeText(AddAnotherDevicesScreensOne.this, "Enter mark of compliance", Toast.LENGTH_SHORT).show();
+                        etxMarkComplience.setError("Field empty");
+                    } else if (etxGps.getText().toString().isEmpty()) {
+                        Toast.makeText(AddAnotherDevicesScreensOne.this, "Enter location details", Toast.LENGTH_SHORT).show();
+                        etxGps.setError("Field empty");
+                    } else {
+                        detectionPost(tk, Integer.parseInt(Uid), spinOsType, etxGps.getText().toString(), spinBrandType,
+                                spinModelType, etxManuSerialNumber.getText().toString(), etxMarkComplience.getText().toString(), mobileStatusId, etxOs.getText().toString());
+                    }
+                }
+        );
     }
 
     private void detectionPost(String token, int strUId, String strOs, String gps, String brandName, String ModelName, String manuSerial, String markComplience, String mobileStatus, String DId) {
         Retrofit retrofit1 = RetrofitSingleton.getClient();
         final EndPoints requestInterface = retrofit1.create(EndPoints.class);
-        final Call<DetectionModel> headmodel = requestInterface.detectionOtherDevice(token, brandName, ModelName, strOs,  "33.33",
+        final Call<DetectionModel> headmodel = requestInterface.detectionOtherDevice(token, brandName, ModelName, strOs, "33.33",
                 "22.30", strUId, mobileStatus, manuSerial, markComplience, DId, gps, "3");
         headmodel.enqueue(new Callback<DetectionModel>() {
             @Override
