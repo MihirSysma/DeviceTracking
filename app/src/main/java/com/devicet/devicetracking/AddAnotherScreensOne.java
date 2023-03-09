@@ -123,9 +123,8 @@ public class AddAnotherScreensOne extends AppCompatActivity implements
         deviceLy.setVisibility(View.GONE);
 
         title = findViewById(R.id.title_name);
-        title.setText("Add another device");
+        title.setText("Add another mobile device");
         findViewById(R.id.back).setOnClickListener(v -> finish());
-
 
         txt_mobile_status_name = findViewById(R.id.mobile_status_name);
         txt_mobile_status_name.setText("Select Status");
@@ -160,6 +159,11 @@ public class AddAnotherScreensOne extends AppCompatActivity implements
         etxMarkComplience = findViewById(R.id.mark_of_comp);
         etxEmailId = findViewById(R.id.email_id);
 
+        network_text1 = findViewById(R.id.network_text);
+        network_text1.setOnClickListener(v -> StatusPopup(network_text1));
+
+        network_text2 = findViewById(R.id.network_text_2);
+        network_text2.setOnClickListener(v -> StatusPopup(network_text2));
 
         // etxModelName = findViewById(R.id.model_name);
         //  etxDeviceType=findViewById(R.id.device_type);
@@ -444,11 +448,12 @@ public class AddAnotherScreensOne extends AppCompatActivity implements
         return imeiNumber;
     }
 
+
     private void getDevice(String tk) {
         RetrofitSingleton.showDialog(AddAnotherScreensOne.this);
         Retrofit retrofit1 = RetrofitSingleton.getClient();
         final EndPoints requestInterface = retrofit1.create(EndPoints.class);
-        final Call<GetDevice> headmodel = requestInterface.getPcLaptop(tk);
+        final Call<GetDevice> headmodel = requestInterface.getDevice(tk);
         headmodel.enqueue(new Callback<GetDevice>() {
             @Override
             public void onResponse(Call<GetDevice> call, Response<GetDevice> response) {
@@ -460,9 +465,11 @@ public class AddAnotherScreensOne extends AppCompatActivity implements
                         if (status == 1) {
                             List<GetDeviceSubList> resp1 = response.body().getData();
                             if (resp1 != null) {
-                                deviceAdapter = new DeviceAdapter(resp1, getApplicationContext());
+                                deviceAdapter = new AddAnotherScreensOne.DeviceAdapter(resp1, getApplicationContext());
                                 deviceRList.setAdapter(deviceAdapter);
                             }
+
+
                             // Toast.makeText(AddAnotherDevicesScreensOne.this, msg, Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(AddAnotherScreensOne.this, msg, Toast.LENGTH_SHORT).show();
@@ -566,7 +573,7 @@ public class AddAnotherScreensOne extends AppCompatActivity implements
                         if (status == 1) {
                             List<GetSubBrands> resp1 = response.body().getSubBrands();
                             if (resp1 != null) {
-                                brandAdapter = new BrandsAdapter(resp1, getApplicationContext());
+                                brandAdapter = new AddAnotherScreensOne.BrandsAdapter(resp1, getApplicationContext());
                                 brandRecyclerview.setAdapter(brandAdapter);
                             }
 
@@ -676,7 +683,7 @@ public class AddAnotherScreensOne extends AppCompatActivity implements
                         if (status == 1) {
                             List<GetModelSub> resp1 = response.body().getData();
                             if (resp1 != null) {
-                                modelAdapter = new ModelAdapter(resp1, getApplicationContext());
+                                modelAdapter = new AddAnotherScreensOne.ModelAdapter(resp1, getApplicationContext());
                                 modelRecyclerview.setAdapter(modelAdapter);
                             }
                             //Toast.makeText(AddAnotherDevicesScreensOne.this, msg, Toast.LENGTH_SHORT).show();

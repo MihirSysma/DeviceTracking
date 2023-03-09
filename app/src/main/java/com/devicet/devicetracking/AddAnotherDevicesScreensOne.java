@@ -97,7 +97,7 @@ public class AddAnotherDevicesScreensOne extends AppCompatActivity implements
     DeviceAdapter deviceAdapter;
     BrandsAdapter brandAdapter;
     ModelAdapter modelAdapter;
-    AppCompatTextView txtDeviceName, brand_txt, model_txt, txt_mobile_status_name, network_text1, network_text2;
+    AppCompatTextView txtDeviceName, brand_txt, model_txt, txt_mobile_status_name;
     LinearLayoutCompat imeiLy, imei_ly2;
 
 
@@ -109,7 +109,7 @@ public class AddAnotherDevicesScreensOne extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register_new_phone_screens);
+        setContentView(R.layout.add_another_device);
         try {
             Objects.requireNonNull(this.getSupportActionBar()).hide();
         } catch (NullPointerException e) {
@@ -123,20 +123,20 @@ public class AddAnotherDevicesScreensOne extends AppCompatActivity implements
 
 
         title = findViewById(R.id.title_name);
-        title.setText("Add another mobile device");
+        title.setText("Add another device");
         findViewById(R.id.back).setOnClickListener(v -> finish());
 
 
-        txt_mobile_status_name = findViewById(R.id.mobile_status_name);
+        txt_mobile_status_name = findViewById(R.id.mobile_status);
         txt_mobile_status_name.setOnClickListener(v -> StatusPopup(txt_mobile_status_name));
 
-        txtDeviceName = findViewById(R.id.device_text);
+        txtDeviceName = findViewById(R.id.device_type);
         txtDeviceName.setOnClickListener(v -> DevicePopup());
 
-        brand_txt = findViewById(R.id.brand_txt);
+        brand_txt = findViewById(R.id.brand_name);
         brand_txt.setOnClickListener(v -> BrandsPopup());
 
-        model_txt = findViewById(R.id.model_text);
+        model_txt = findViewById(R.id.model_name);
         model_txt.setOnClickListener(v -> ModelPopup());
 
         try {
@@ -164,11 +164,7 @@ public class AddAnotherDevicesScreensOne extends AppCompatActivity implements
         // etxMobileStatus=findViewById(R.id.mobile_statuss);
         // imei_ly.setVisibility(View.GONE);
 
-        network_text1 = findViewById(R.id.network_text);
-        network_text1.setOnClickListener(v -> StatusPopup(network_text1));
 
-        network_text2 = findViewById(R.id.network_text_2);
-        network_text2.setOnClickListener(v -> StatusPopup(network_text2));
 
         lay_add = findViewById(R.id.ly_add_device);
         lay_add.setVisibility(View.VISIBLE);
@@ -461,7 +457,7 @@ public class AddAnotherDevicesScreensOne extends AppCompatActivity implements
         RetrofitSingleton.showDialog(AddAnotherDevicesScreensOne.this);
         Retrofit retrofit1 = RetrofitSingleton.getClient();
         final EndPoints requestInterface = retrofit1.create(EndPoints.class);
-        final Call<GetDevice> headmodel = requestInterface.getDevice(tk);
+        final Call<GetDevice> headmodel = requestInterface.getPcLaptop(tk);
         headmodel.enqueue(new Callback<GetDevice>() {
             @Override
             public void onResponse(Call<GetDevice> call, Response<GetDevice> response) {
@@ -473,11 +469,9 @@ public class AddAnotherDevicesScreensOne extends AppCompatActivity implements
                         if (status == 1) {
                             List<GetDeviceSubList> resp1 = response.body().getData();
                             if (resp1 != null) {
-                                deviceAdapter = new DeviceAdapter(resp1, getApplicationContext());
+                                deviceAdapter = new AddAnotherDevicesScreensOne.DeviceAdapter(resp1, getApplicationContext());
                                 deviceRList.setAdapter(deviceAdapter);
                             }
-
-
                             // Toast.makeText(AddAnotherDevicesScreensOne.this, msg, Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(AddAnotherDevicesScreensOne.this, msg, Toast.LENGTH_SHORT).show();
@@ -565,7 +559,6 @@ public class AddAnotherDevicesScreensOne extends AppCompatActivity implements
             }
         }
     }
-
     private void brandsapis(String tk, int bId) {
         RetrofitSingleton.showDialog(AddAnotherDevicesScreensOne.this);
         Retrofit retrofit1 = RetrofitSingleton.getClient();
@@ -582,7 +575,7 @@ public class AddAnotherDevicesScreensOne extends AppCompatActivity implements
                         if (status == 1) {
                             List<GetSubBrands> resp1 = response.body().getSubBrands();
                             if (resp1 != null) {
-                                brandAdapter = new BrandsAdapter(resp1, getApplicationContext());
+                                brandAdapter = new AddAnotherDevicesScreensOne.BrandsAdapter(resp1, getApplicationContext());
                                 brandRecyclerview.setAdapter(brandAdapter);
                             }
 
@@ -606,6 +599,7 @@ public class AddAnotherDevicesScreensOne extends AppCompatActivity implements
             }
         });
     }
+
 
     private void BrandsPopup() {
         AlertDialog.Builder dialog = new AlertDialog.Builder(AddAnotherDevicesScreensOne.this);
@@ -692,7 +686,7 @@ public class AddAnotherDevicesScreensOne extends AppCompatActivity implements
                         if (status == 1) {
                             List<GetModelSub> resp1 = response.body().getData();
                             if (resp1 != null) {
-                                modelAdapter = new ModelAdapter(resp1, getApplicationContext());
+                                modelAdapter = new AddAnotherDevicesScreensOne.ModelAdapter(resp1, getApplicationContext());
                                 modelRecyclerview.setAdapter(modelAdapter);
                             }
                             //Toast.makeText(AddAnotherDevicesScreensOne.this, msg, Toast.LENGTH_SHORT).show();
@@ -712,7 +706,6 @@ public class AddAnotherDevicesScreensOne extends AppCompatActivity implements
             }
         });
     }
-
     private void ModelPopup() {
         AlertDialog.Builder dialog = new AlertDialog.Builder(AddAnotherDevicesScreensOne.this);
         dialog.setCancelable(true);

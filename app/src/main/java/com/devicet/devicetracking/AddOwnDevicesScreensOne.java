@@ -2,14 +2,11 @@ package com.devicet.devicetracking;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -28,9 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.DatePicker;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -39,17 +34,13 @@ import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.LinearLayoutCompat;
-import androidx.appcompat.widget.SearchView;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.devicet.devicetracking.Models.DetectionModel;
-import com.devicet.devicetracking.Models.GetBrands;
-import com.devicet.devicetracking.Models.GetDevice;
 import com.devicet.devicetracking.Models.GetDeviceSubList;
-import com.devicet.devicetracking.Models.GetModel;
 import com.devicet.devicetracking.Models.GetModelSub;
 import com.devicet.devicetracking.Models.GetSubBrands;
 import com.devicet.devicetracking.Models.StatusModel;
@@ -58,14 +49,9 @@ import com.devicet.devicetracking.Utils.EndPoints;
 import com.devicet.devicetracking.Utils.GPSTracker;
 import com.devicet.devicetracking.Utils.RetrofitSingleton;
 import com.devicet.devicetracking.Utils.SharedPreferenceHelper;
-import com.devicet.devicetracking.Utils.isEmailValid;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -83,17 +69,18 @@ public class AddOwnDevicesScreensOne extends AppCompatActivity implements
     static String strLat = "22.7196", strLng = "75.8577", netName, NetWStatusId, NetworkName;
     DatePickerDialog picker;
     LinearLayoutCompat lay_other, lay_add;
-    RecyclerView networkList;
+    RecyclerView networkList,statusRecyclerview;
 
     List<GetDeviceSubList> getDeviceList;
     AlertDialog alertDialog;
     List<GetSubBrands> BList;
     List<GetModelSub> getModelSubList;
+    StatsuAdapter statusAdapter;
     AppCompatEditText etxImeiNumber, etxImeiNumber_2, etxSimNumber, etxOs, etxDt, etxGps, etxManuSerialNumber, etxMarkComplience, etxEmailId;
     AppCompatSpinner etxModelName, etxDeviceType, etxMobileStatus;
-    AppCompatTextView txtDeviceName, brand_txt, model_txt, network_text, network_text_2;
+    AppCompatTextView txtDeviceName, brand_txt, model_txt, network_text, network_text_2, mobile_status;
 
-    StatsuAdapter networkAdapter;
+    NetworkAdapter networkAdapter;
     List<StatusModel> statusModelList;
     Double saveLatitude, saveLongitude;
     static int dId, bId, mmId;
@@ -127,12 +114,7 @@ public class AddOwnDevicesScreensOne extends AppCompatActivity implements
         statusModelList = new ArrayList<>();
         title = findViewById(R.id.title);
         title.setText("Add this mobile device");
-        findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        findViewById(R.id.back).setOnClickListener(v -> finish());
         getDeviceList = new ArrayList<>();
         BList = new ArrayList<>();
         getModelSubList = new ArrayList<>();
@@ -153,7 +135,6 @@ public class AddOwnDevicesScreensOne extends AppCompatActivity implements
             Toast.makeText(this, "Please try again. Something went wrong", Toast.LENGTH_SHORT).show();
         }
 
-
         network_text = findViewById(R.id.network_text);
         network_text.setOnClickListener(v -> NetWorkPopup(network_text));
 
@@ -170,6 +151,9 @@ public class AddOwnDevicesScreensOne extends AppCompatActivity implements
         etxManuSerialNumber = findViewById(R.id.manu_serial_number);
         etxMarkComplience = findViewById(R.id.mark_of_comp);
         etxEmailId = findViewById(R.id.email_id);
+        mobile_status = findViewById(R.id.mobile_status_name);
+
+        mobile_status.setOnClickListener(v -> StatusPopup(mobile_status));
 
 
         //etxModelName = findViewById(R.id.model_name);
@@ -189,18 +173,15 @@ public class AddOwnDevicesScreensOne extends AppCompatActivity implements
 
 
         if (imeiNumber.equals("imei")) {
-            etxImeiNumber.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String imeis = SharedPreferenceHelper.getStatus(AddOwnDevicesScreensOne.this, "imei", "ok");
-                    Log.d("TAG", "gst" + imeis);
-                    if (imeis.equals("2")) {
-                        etxImeiNumber.setFocusableInTouchMode(true);
-                        etxImeiNumber.setText(null);
-                    } else {
-                        InfoDialogImei();
-                        etxImeiNumber.setFocusableInTouchMode(false);
-                    }
+            etxImeiNumber.setOnClickListener(v -> {
+                String imeis = SharedPreferenceHelper.getStatus(AddOwnDevicesScreensOne.this, "imei", "ok");
+                Log.d("TAG", "gst" + imeis);
+                if (imeis.equals("2")) {
+                    etxImeiNumber.setFocusableInTouchMode(true);
+                    etxImeiNumber.setText(null);
+                } else {
+                    InfoDialogImei();
+                    etxImeiNumber.setFocusableInTouchMode(false);
                 }
             });
         } else {
@@ -295,6 +276,109 @@ public class AddOwnDevicesScreensOne extends AppCompatActivity implements
                         imei2, etxSimNumber.getText().toString(), etxGps.getText().toString(), etxManuSerialNumber.getText().toString(), etxOs.getText().toString(), strLat, strLng);
             }
         });
+    }
+    private void toStatusList(AppCompatTextView txt) {
+
+        StatusModel statusModel = new StatusModel();
+        statusModel.setId("1");
+        statusModel.setName("ACTIVE");
+        statusModelList.add(statusModel);
+
+        StatusModel statusModel1 = new StatusModel();
+        statusModel1.setId("2");
+        statusModel1.setName("DEACTIVATE");
+        statusModelList.add(statusModel1);
+
+        StatusModel statusModel2 = new StatusModel();
+        statusModel2.setId("3");
+        statusModel2.setName("REACTIVATE");
+        statusModelList.add(statusModel2);
+
+        StatusModel statusModel3 = new StatusModel();
+        statusModel3.setId("4");
+        statusModel3.setName("STOLEN");
+        statusModelList.add(statusModel3);
+
+        StatusModel statusModel4 = new StatusModel();
+        statusModel4.setId("5");
+        statusModel4.setName("LOST");
+        statusModelList.add(statusModel4);
+
+        StatusModel statusModel5 = new StatusModel();
+        statusModel5.setId("6");
+        statusModel5.setName("DAMAGED");
+        statusModelList.add(statusModel5);
+
+        statusAdapter = new StatsuAdapter(statusModelList, getApplicationContext(), txt);
+        statusRecyclerview.setAdapter(statusAdapter);
+
+    }
+    class StatsuAdapter extends RecyclerView.Adapter<StatsuAdapter.MyStateHolder> {
+
+        List<StatusModel> bList;
+        Context context;
+        AppCompatTextView txt;
+        String im, mfg;
+
+        public StatsuAdapter(List<StatusModel> deviceList, Context context, AppCompatTextView txt) {
+            this.bList = deviceList;
+            this.context = context;
+            this.txt = txt;
+        }
+
+
+        @NonNull
+        @Override
+        public StatsuAdapter.MyStateHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View v = LayoutInflater.from(getApplicationContext()).inflate(R.layout.status_itemss, parent, false);
+            return new StatsuAdapter.MyStateHolder(v);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull StatsuAdapter.MyStateHolder holder, int position) {
+            final StatusModel gd = bList.get(position);
+            holder.device_name.setText(gd.getName());
+
+            holder.select_device.setOnClickListener(view -> {
+                final StatusModel deviveM = bList.get(position);
+                Log.d("TAG", "onClick: " + deviveM.getId() + "====" + deviveM.getName() + "===" + im + "====" + mfg);
+                alertDialog.dismiss();
+                txt.setText(deviveM.getName());
+            });
+        }
+
+        @Override
+        public int getItemCount() {
+            return bList.size();
+        }
+
+        class MyStateHolder extends RecyclerView.ViewHolder {
+            TextView device_name;
+            LinearLayoutCompat select_device;
+
+            public MyStateHolder(@NonNull View itemView) {
+                super(itemView);
+                device_name = itemView.findViewById(R.id.brands_name);
+                select_device = itemView.findViewById(R.id.select_brands);
+
+            }
+        }
+    }
+
+    private void StatusPopup(AppCompatTextView txt) {
+        statusModelList.clear();
+        AlertDialog.Builder dialog = new AlertDialog.Builder(AddOwnDevicesScreensOne.this);
+        dialog.setCancelable(true);
+        LayoutInflater inflater = getLayoutInflater();
+        final View vieww = inflater.inflate(R.layout.device_dialog, null);
+        statusRecyclerview = vieww.findViewById(R.id.device_list);
+        statusRecyclerview.setLayoutManager(new LinearLayoutManager(AddOwnDevicesScreensOne.this));
+        statusRecyclerview.addItemDecoration(new DividerItemDecoration(statusRecyclerview.getContext(), DividerItemDecoration.VERTICAL));
+        toStatusList(txt);
+        dialog.setView(vieww);
+        dialog.setCancelable(true);
+        alertDialog = dialog.create();
+        alertDialog.show();
     }
 
 
@@ -488,23 +572,17 @@ public class AddOwnDevicesScreensOne extends AppCompatActivity implements
         final View vieww = inflater.inflate(R.layout.info_dialog, null);
         TextView closeBtn = vieww.findViewById(R.id.close);
         TextView knowBtn = vieww.findViewById(R.id.know_more);
-        closeBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alertDialog.dismiss();
-                SharedPreferenceHelper.setStatus(AddOwnDevicesScreensOne.this, "imei", "2");
+        closeBtn.setOnClickListener(v -> {
+            alertDialog.dismiss();
+            SharedPreferenceHelper.setStatus(AddOwnDevicesScreensOne.this, "imei", "2");
 
-            }
         });
-        knowBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SharedPreferenceHelper.setStatus(AddOwnDevicesScreensOne.this, "imei", "2");
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://developer.android.com/about/versions/10/privacy/changes#non-resettable-device-ids"));
-                startActivity(browserIntent);
-                alertDialog.dismiss();
+        knowBtn.setOnClickListener(v -> {
+            SharedPreferenceHelper.setStatus(AddOwnDevicesScreensOne.this, "imei", "2");
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://developer.android.com/about/versions/10/privacy/changes#non-resettable-device-ids"));
+            startActivity(browserIntent);
+            alertDialog.dismiss();
 
-            }
         });
         dialog.setView(vieww);
         dialog.setCancelable(true);
@@ -519,23 +597,17 @@ public class AddOwnDevicesScreensOne extends AppCompatActivity implements
         final View vieww = inflater.inflate(R.layout.info_dialog, null);
         TextView closeBtn = vieww.findViewById(R.id.close);
         TextView knowBtn = vieww.findViewById(R.id.know_more);
-        closeBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alertDialog.dismiss();
-                SharedPreferenceHelper.setStatus(AddOwnDevicesScreensOne.this, "imei2", "3");
+        closeBtn.setOnClickListener(v -> {
+            alertDialog.dismiss();
+            SharedPreferenceHelper.setStatus(AddOwnDevicesScreensOne.this, "imei2", "3");
 
-            }
         });
-        knowBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SharedPreferenceHelper.setStatus(AddOwnDevicesScreensOne.this, "imei2", "3");
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://developer.android.com/about/versions/10/privacy/changes#non-resettable-device-ids"));
-                startActivity(browserIntent);
-                alertDialog.dismiss();
+        knowBtn.setOnClickListener(v -> {
+            SharedPreferenceHelper.setStatus(AddOwnDevicesScreensOne.this, "imei2", "3");
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://developer.android.com/about/versions/10/privacy/changes#non-resettable-device-ids"));
+            startActivity(browserIntent);
+            alertDialog.dismiss();
 
-            }
         });
         dialog.setView(vieww);
         dialog.setCancelable(true);
@@ -551,20 +623,15 @@ public class AddOwnDevicesScreensOne extends AppCompatActivity implements
         final View vieww = inflater.inflate(R.layout.info_dialog, null);
         TextView closeBtn = vieww.findViewById(R.id.close);
         TextView knowBtn = vieww.findViewById(R.id.know_more);
-        closeBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alertDialog.dismiss();
-                SharedPreferenceHelper.setStatus(AddOwnDevicesScreensOne.this, "sim", "1");
-            }
+        closeBtn.setOnClickListener(v -> {
+            alertDialog.dismiss();
+            SharedPreferenceHelper.setStatus(AddOwnDevicesScreensOne.this, "sim", "1");
         });
-        knowBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SharedPreferenceHelper.setStatus(AddOwnDevicesScreensOne.this, "sim", "1");
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://developer.android.com/about/versions/10/privacy/changes#non-resettable-device-ids"));
-                startActivity(browserIntent);
-                alertDialog.dismiss();
+        knowBtn.setOnClickListener(v -> {
+            SharedPreferenceHelper.setStatus(AddOwnDevicesScreensOne.this, "sim", "1");
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://developer.android.com/about/versions/10/privacy/changes#non-resettable-device-ids"));
+            startActivity(browserIntent);
+            alertDialog.dismiss();
 //                if(type.equals("sim")){
 //
 //                }else if(type.equals("imei")){
@@ -572,7 +639,6 @@ public class AddOwnDevicesScreensOne extends AppCompatActivity implements
 //                    SharedPreferenceHelper.setStatus(AddOwnDevicesScreensOne.this,"imei","2");
 //                }
 
-            }
         });
         dialog.setView(vieww);
         dialog.setCancelable(true);
@@ -746,20 +812,20 @@ public class AddOwnDevicesScreensOne extends AppCompatActivity implements
         statusModel4.setName("Other");
         statusModelList.add(statusModel4);
 
-        networkAdapter = new StatsuAdapter(statusModelList, getApplicationContext(), txt);
+        networkAdapter = new NetworkAdapter(statusModelList, getApplicationContext(), txt);
         networkList.setAdapter(networkAdapter);
 
 
     }
 
-    class StatsuAdapter extends RecyclerView.Adapter<StatsuAdapter.MyStateHolder> {
+    class NetworkAdapter extends RecyclerView.Adapter<NetworkAdapter.MyStateHolder> {
 
         List<StatusModel> bList;
         Context context;
         AppCompatTextView txt;
         String im, mfg;
 
-        public StatsuAdapter(List<StatusModel> deviceList, Context context, AppCompatTextView txt) {
+        public NetworkAdapter(List<StatusModel> deviceList, Context context, AppCompatTextView txt) {
             this.bList = deviceList;
             this.context = context;
             this.txt = txt;
@@ -767,13 +833,13 @@ public class AddOwnDevicesScreensOne extends AppCompatActivity implements
 
         @NonNull
         @Override
-        public StatsuAdapter.MyStateHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        public NetworkAdapter.MyStateHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View v = LayoutInflater.from(getApplicationContext()).inflate(R.layout.status_itemss, parent, false);
-            return new StatsuAdapter.MyStateHolder(v);
+            return new NetworkAdapter.MyStateHolder(v);
         }
 
         @Override
-        public void onBindViewHolder(@NonNull StatsuAdapter.MyStateHolder holder, @SuppressLint("RecyclerView") int position) {
+        public void onBindViewHolder(@NonNull NetworkAdapter.MyStateHolder holder, @SuppressLint("RecyclerView") int position) {
             final StatusModel gd = bList.get(position);
             holder.device_name.setText(gd.getName());
 

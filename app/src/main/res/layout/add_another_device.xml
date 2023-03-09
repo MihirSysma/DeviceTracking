@@ -5,17 +5,19 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="match_parent"
-    tools:context=".AddOwnDevicesScreens">
+    tools:context=".AddAnotherDevicesScreensOne">
     <androidx.appcompat.widget.Toolbar
         android:background="@color/purple_500"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <androidx.appcompat.widget.AppCompatImageView
-            android:visibility="gone"
+            android:id="@+id/back"
+            android:visibility="visible"
             android:src="@drawable/ic_baseline_arrow_back_24"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <TextView
+            android:id="@+id/title_name"
             android:text="Add another device"
             android:textStyle="bold"
             android:textSize="16dp"
@@ -30,16 +32,6 @@
             android:layout_gravity="end"
             android:textStyle="bold"
             android:text="My Device"
-            android:layout_marginRight="10dp"
-            android:textColor="@color/white"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:id="@+id/exit_app"
-            android:visibility="visible"
-            android:layout_gravity="end"
-            android:textStyle="bold"
-            android:text="Logout"
             android:layout_marginRight="10dp"
             android:textColor="@color/white"
             android:layout_width="wrap_content"
@@ -66,15 +58,15 @@
                 android:text=" Select Device Type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
-            <androidx.appcompat.widget.AppCompatSpinner
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/device_type"
-                android:layout_height="48dp"
-                android:layout_marginTop="5dp"
-                android:inputType="text"
-                android:textColorHint="@color/gray"
-                android:paddingStart="10dp"
-                android:hint="Device Type"
-                android:layout_width="match_parent"/>
+                android:hint="Select Device Type"
+                android:layout_gravity="center"
+                android:paddingStart="5dp"
+                android:gravity="center|start"
+                android:background="@drawable/editdrawable"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"/>
         </androidx.appcompat.widget.LinearLayoutCompat>
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
@@ -85,15 +77,15 @@
                 android:text=" Brand Name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
-            <androidx.appcompat.widget.AppCompatSpinner
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/brand_name"
-                android:layout_height="48dp"
-                android:layout_marginTop="5dp"
-                android:inputType="text"
-                android:textColorHint="@color/gray"
-                android:paddingStart="10dp"
-                android:hint="Model Name"
-                android:layout_width="match_parent"/>
+                android:hint="Select Brand Type"
+                android:layout_gravity="center"
+                android:paddingStart="5dp"
+                android:gravity="center|start"
+                android:background="@drawable/editdrawable"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"/>
         </androidx.appcompat.widget.LinearLayoutCompat>
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
@@ -104,15 +96,15 @@
                 android:text=" Model Name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
-            <androidx.appcompat.widget.AppCompatSpinner
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/model_name"
-                android:layout_height="48dp"
-                android:layout_marginTop="5dp"
-                android:inputType="text"
-                android:textColorHint="@color/gray"
-                android:paddingStart="10dp"
-                android:hint="Model Name"
-                android:layout_width="match_parent"/>
+                android:hint="Select Model Type"
+                android:layout_gravity="center"
+                android:paddingStart="5dp"
+                android:gravity="center|start"
+                android:background="@drawable/editdrawable"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"/>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -121,18 +113,18 @@
             android:layout_margin="10dp"
             android:orientation="vertical">
             <androidx.appcompat.widget.AppCompatTextView
-                android:text=" Mobile Status"
+                android:text="Status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
-            <androidx.appcompat.widget.AppCompatSpinner
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/mobile_status"
-                android:layout_height="48dp"
-                android:layout_marginTop="5dp"
-                android:inputType="text"
-                android:textColorHint="@color/gray"
-                android:paddingStart="10dp"
-                android:hint="Model Name"
-                android:layout_width="match_parent"/>
+                android:hint="Select status"
+                android:layout_gravity="center"
+                android:paddingStart="5dp"
+                android:gravity="center|start"
+                android:background="@drawable/editdrawable"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"/>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -163,30 +155,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:orientation="vertical">
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:text="Device IMEA number"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/imei_number"
-                    android:layout_height="48dp"
-                    android:maxLength="15"
-                    android:layout_marginTop="5dp"
-                    android:digits="1234567890"
-                    android:textAllCaps="true"
-                    android:inputType="number"
-                    android:textColorHint="@color/gray"
-                    android:paddingStart="10dp"
-                    android:background="@drawable/editdrawable"
-                    android:hint="E.g 1234...15"
-                    android:layout_width="match_parent"/>
-
-            </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
@@ -194,11 +162,11 @@
                 android:layout_margin="10dp"
                 android:orientation="vertical">
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:text="Sim number"
+                    android:text="Manufacture serial number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/sim_number"
+                    android:id="@+id/maf_number"
                     android:layout_height="48dp"
                     android:layout_marginTop="5dp"
                     android:digits="1234567890"
@@ -208,7 +176,7 @@
                     android:textColorHint="@color/gray"
                     android:paddingStart="10dp"
                     android:background="@drawable/editdrawable"
-                    android:hint="E.g 1234...15"
+                    android:hint="E.g 123456"
                     android:layout_width="match_parent"/>
 
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -326,13 +294,37 @@
                     android:layout_width="match_parent"/>
 
             </androidx.appcompat.widget.LinearLayoutCompat>
+
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:orientation="vertical">
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:text="Address"
+                    android:text=" Mark of compliance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/mark_of_comp"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="5dp"
+                    android:textColorHint="@color/gray"
+                    android:paddingStart="10dp"
+                    android:digits="1234567890-"
+                    android:inputType="numberDecimal"
+                    android:background="@drawable/editdrawable"
+                    android:hint="@string/e_g_amp_x2715"
+                    android:layout_width="match_parent"/>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="vertical">
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:text="Gps Location"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <androidx.appcompat.widget.AppCompatEditText
@@ -347,7 +339,7 @@
                     android:textColorHint="@color/gray"
                     android:paddingStart="10dp"
                     android:background="@drawable/editdrawable"
-                    android:hint="Full address"
+                    android:hint="Location"
                     android:layout_width="match_parent"/>
 
             </androidx.appcompat.widget.LinearLayoutCompat>

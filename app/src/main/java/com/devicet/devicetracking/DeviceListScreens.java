@@ -129,7 +129,7 @@ public class DeviceListScreens extends AppCompatActivity {
             ee.printStackTrace();
         }
 
-        fab3.setOnClickListener(v -> {
+        fab1.setOnClickListener(v -> {
             Intent i = new Intent(DeviceListScreens.this, AddAnotherDevicesScreensOne.class);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(i);
@@ -141,7 +141,7 @@ public class DeviceListScreens extends AppCompatActivity {
             startActivity(i);
         });
 
-        fab1.setOnClickListener(v -> {
+        fab3.setOnClickListener(v -> {
             Intent i = new Intent(DeviceListScreens.this, AddAnotherScreensOne.class);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(i);
@@ -587,13 +587,7 @@ public class DeviceListScreens extends AppCompatActivity {
         toast.setGravity(Gravity.CENTER, 50, 50);
         toast.show();
 
-        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-
-            @Override
-            public void run() {
-                doubleClick = false;
-            }
-        }, 2000);
+        new Handler(Looper.getMainLooper()).postDelayed(() -> doubleClick = false, 2000);
     }
 
 }
