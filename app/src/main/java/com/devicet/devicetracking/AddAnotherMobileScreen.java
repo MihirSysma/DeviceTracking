@@ -24,7 +24,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -67,7 +66,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class AddAnotherScreensOne extends AppCompatActivity implements
+public class AddAnotherMobileScreen extends AppCompatActivity implements
         AdapterView.OnItemSelectedListener {
 
     static String strModel, strOs, strToken, tk, Uid;
@@ -143,8 +142,8 @@ public class AddAnotherScreensOne extends AppCompatActivity implements
             Objects.requireNonNull(this.getSupportActionBar()).hide();
         } catch (NullPointerException e) {
         }
-        strToken = SharedPreferenceHelper.getPrefTokenKey(AddAnotherScreensOne.this, "token", "tk");
-        Uid = SharedPreferenceHelper.getUid(AddAnotherScreensOne.this, "UID", "0");
+        strToken = SharedPreferenceHelper.getPrefTokenKey(AddAnotherMobileScreen.this, "token", "tk");
+        Uid = SharedPreferenceHelper.getUid(AddAnotherMobileScreen.this, "UID", "0");
         if (strToken != null & Uid != null) {
             tk = strToken;
         } else {
@@ -174,8 +173,8 @@ public class AddAnotherScreensOne extends AppCompatActivity implements
         lay_add.setVisibility(View.VISIBLE);
         lay_other = findViewById(R.id.ly_serial_number);
 
-        String kk = SharedPreferenceHelper.getKey(AddAnotherScreensOne.this, "key", "0");
-        String dvId = getDeviceId(AddAnotherScreensOne.this);
+        String kk = SharedPreferenceHelper.getKey(AddAnotherMobileScreen.this, "key", "0");
+        String dvId = getDeviceId(AddAnotherMobileScreen.this);
         //  String sim = getSimNumber(AddAnotherDevicesScreensOne.this);
         //  String imeiNumber = getImeiNumber(AddAnotherDevicesScreensOne.this);
         // etxImeiNumber.setText(imeiNumber);
@@ -192,7 +191,7 @@ public class AddAnotherScreensOne extends AppCompatActivity implements
             int month = cldr.get(Calendar.MONTH);
             int year = cldr.get(Calendar.YEAR);
             // date picker dialog
-            picker = new DatePickerDialog(AddAnotherScreensOne.this,
+            picker = new DatePickerDialog(AddAnotherMobileScreen.this,
                     (view, year1, monthOfYear, dayOfMonth) -> {
                         try {
                             DateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
@@ -241,17 +240,16 @@ public class AddAnotherScreensOne extends AppCompatActivity implements
         findViewById(R.id.submit_add_device).setOnClickListener(v -> {
             //    Toast.makeText(AddAnotherScreensOne.this, "Click Me", Toast.LENGTH_SHORT).show();
             if (txtDeviceName.getText().toString().isEmpty()) {
-                Toast.makeText(AddAnotherScreensOne.this, "Select Device Type", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddAnotherMobileScreen.this, "Select Device Type", Toast.LENGTH_SHORT).show();
             } else if (brand_txt.getText().toString().isEmpty()) {
-                Toast.makeText(AddAnotherScreensOne.this, "Select Brand Type", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddAnotherMobileScreen.this, "Select Brand Type", Toast.LENGTH_SHORT).show();
             } else if (model_txt.getText().toString().isEmpty()) {
-                Toast.makeText(AddAnotherScreensOne.this, "Select Model Type", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddAnotherMobileScreen.this, "Select Model Type", Toast.LENGTH_SHORT).show();
             } else if (txt_mobile_status_name.getText().toString().isEmpty()) {
-                Toast.makeText(AddAnotherScreensOne.this, "Select Status", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddAnotherMobileScreen.this, "Select Status", Toast.LENGTH_SHORT).show();
             } else if (etxManuSerialNumber.getText().toString().isEmpty()) {
                 etxManuSerialNumber.setError("Field empty");
-            }
-            else if (etxMarkComplience.getText().toString().isEmpty()) {
+            } else if (etxMarkComplience.getText().toString().isEmpty()) {
                 etxMarkComplience.setError("Field empty");
             } else if (etxGps.getText().toString().isEmpty()) {
                 etxGps.setError("Field empty");
@@ -295,7 +293,7 @@ public class AddAnotherScreensOne extends AppCompatActivity implements
 
             @Override
             public void onFailure(Call<DetectionModel> call, Throwable t) {
-                Toast.makeText(AddAnotherScreensOne.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddAnotherMobileScreen.this, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -303,8 +301,6 @@ public class AddAnotherScreensOne extends AppCompatActivity implements
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         // mobileStatusId=mobielStatus[parent.getSelectedItemPosition()];
-
-
     }
 
     @Override
@@ -313,7 +309,7 @@ public class AddAnotherScreensOne extends AppCompatActivity implements
     }
 
     private void msgAPi(String msg) {
-        AlertDialog.Builder dialog = new AlertDialog.Builder(AddAnotherScreensOne.this);
+        AlertDialog.Builder dialog = new AlertDialog.Builder(AddAnotherMobileScreen.this);
         dialog.setCancelable(false);
         LayoutInflater inflater = getLayoutInflater();
         final View vieww = inflater.inflate(R.layout.info_msg, null);
@@ -327,7 +323,7 @@ public class AddAnotherScreensOne extends AppCompatActivity implements
         closeBtn.setGravity(Gravity.CENTER);
         closeBtn.setOnClickListener(v -> {
             alertDialog.dismiss();
-            Intent i = new Intent(AddAnotherScreensOne.this, DeviceListScreens.class);
+            Intent i = new Intent(AddAnotherMobileScreen.this, DeviceListScreens.class);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(i);
             finish();
@@ -450,7 +446,7 @@ public class AddAnotherScreensOne extends AppCompatActivity implements
 
 
     private void getDevice(String tk) {
-        RetrofitSingleton.showDialog(AddAnotherScreensOne.this);
+        RetrofitSingleton.showDialog(AddAnotherMobileScreen.this);
         Retrofit retrofit1 = RetrofitSingleton.getClient();
         final EndPoints requestInterface = retrofit1.create(EndPoints.class);
         final Call<GetDevice> headmodel = requestInterface.getDevice(tk);
@@ -465,14 +461,14 @@ public class AddAnotherScreensOne extends AppCompatActivity implements
                         if (status == 1) {
                             List<GetDeviceSubList> resp1 = response.body().getData();
                             if (resp1 != null) {
-                                deviceAdapter = new AddAnotherScreensOne.DeviceAdapter(resp1, getApplicationContext());
+                                deviceAdapter = new AddAnotherMobileScreen.DeviceAdapter(resp1, getApplicationContext());
                                 deviceRList.setAdapter(deviceAdapter);
                             }
 
 
                             // Toast.makeText(AddAnotherDevicesScreensOne.this, msg, Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(AddAnotherScreensOne.this, msg, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AddAnotherMobileScreen.this, msg, Toast.LENGTH_SHORT).show();
                         }
                     }
                 } catch (Exception ff) {
@@ -483,19 +479,19 @@ public class AddAnotherScreensOne extends AppCompatActivity implements
             @Override
             public void onFailure(Call<GetDevice> call, Throwable t) {
                 RetrofitSingleton.hideDialog();
-                Toast.makeText(AddAnotherScreensOne.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddAnotherMobileScreen.this, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void DevicePopup() {
-        AlertDialog.Builder dialog = new AlertDialog.Builder(AddAnotherScreensOne.this);
+        AlertDialog.Builder dialog = new AlertDialog.Builder(AddAnotherMobileScreen.this);
         dialog.setCancelable(true);
         LayoutInflater inflater = getLayoutInflater();
         final View vieww = inflater.inflate(R.layout.device_dialog, null);
         SearchView searchView = vieww.findViewById(R.id.search_view);
         deviceRList = vieww.findViewById(R.id.device_list);
-        deviceRList.setLayoutManager(new LinearLayoutManager(AddAnotherScreensOne.this));
+        deviceRList.setLayoutManager(new LinearLayoutManager(AddAnotherMobileScreen.this));
         deviceRList.addItemDecoration(new DividerItemDecoration(deviceRList.getContext(), DividerItemDecoration.VERTICAL));
         getDevice(tk);
         dialog.setView(vieww);
@@ -558,14 +554,14 @@ public class AddAnotherScreensOne extends AppCompatActivity implements
     }
 
     private void brandsapis(String tk, int bId) {
-        RetrofitSingleton.showDialog(AddAnotherScreensOne.this);
+        RetrofitSingleton.showDialog(AddAnotherMobileScreen.this);
         Retrofit retrofit1 = RetrofitSingleton.getClient();
         final EndPoints requestInterface = retrofit1.create(EndPoints.class);
         final Call<GetBrands> headmodel = requestInterface.getBrands(tk, bId);
         headmodel.enqueue(new Callback<GetBrands>() {
             @Override
             public void onResponse(Call<GetBrands> call, Response<GetBrands> response) {
-                RetrofitSingleton.showDialog(AddAnotherScreensOne.this);
+                RetrofitSingleton.showDialog(AddAnotherMobileScreen.this);
                 try {
                     if (response.body() != null) {
                         String msg = response.body().getApiMessage();
@@ -573,7 +569,7 @@ public class AddAnotherScreensOne extends AppCompatActivity implements
                         if (status == 1) {
                             List<GetSubBrands> resp1 = response.body().getSubBrands();
                             if (resp1 != null) {
-                                brandAdapter = new AddAnotherScreensOne.BrandsAdapter(resp1, getApplicationContext());
+                                brandAdapter = new AddAnotherMobileScreen.BrandsAdapter(resp1, getApplicationContext());
                                 brandRecyclerview.setAdapter(brandAdapter);
                             }
 
@@ -582,7 +578,7 @@ public class AddAnotherScreensOne extends AppCompatActivity implements
                             if (response.body().getSubBrands().size() <= 1) {
                                 brand_txt.setText(null);
                             }
-                            Toast.makeText(AddAnotherScreensOne.this, msg, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AddAnotherMobileScreen.this, msg, Toast.LENGTH_SHORT).show();
                         }
                     }
                 } catch (Exception ff) {
@@ -592,20 +588,20 @@ public class AddAnotherScreensOne extends AppCompatActivity implements
 
             @Override
             public void onFailure(Call<GetBrands> call, Throwable t) {
-                RetrofitSingleton.showDialog(AddAnotherScreensOne.this);
-                Toast.makeText(AddAnotherScreensOne.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                RetrofitSingleton.showDialog(AddAnotherMobileScreen.this);
+                Toast.makeText(AddAnotherMobileScreen.this, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void BrandsPopup() {
-        AlertDialog.Builder dialog = new AlertDialog.Builder(AddAnotherScreensOne.this);
+        AlertDialog.Builder dialog = new AlertDialog.Builder(AddAnotherMobileScreen.this);
         dialog.setCancelable(true);
         LayoutInflater inflater = getLayoutInflater();
         final View vieww = inflater.inflate(R.layout.device_dialog, null);
         SearchView searchView = vieww.findViewById(R.id.search_view);
         brandRecyclerview = vieww.findViewById(R.id.device_list);
-        brandRecyclerview.setLayoutManager(new LinearLayoutManager(AddAnotherScreensOne.this));
+        brandRecyclerview.setLayoutManager(new LinearLayoutManager(AddAnotherMobileScreen.this));
         brandRecyclerview.addItemDecoration(new DividerItemDecoration(brandRecyclerview.getContext(), DividerItemDecoration.VERTICAL));
         brandsapis(tk, dId);
         dialog.setView(vieww);
@@ -668,14 +664,14 @@ public class AddAnotherScreensOne extends AppCompatActivity implements
     }
 
     private void modelAPi(String tk, int bId) {
-        RetrofitSingleton.showDialog(AddAnotherScreensOne.this);
+        RetrofitSingleton.showDialog(AddAnotherMobileScreen.this);
         Retrofit retrofit1 = RetrofitSingleton.getClient();
         final EndPoints requestInterface = retrofit1.create(EndPoints.class);
         final Call<GetModel> headmodel = requestInterface.getModels(tk, bId);
         headmodel.enqueue(new Callback<GetModel>() {
             @Override
             public void onResponse(Call<GetModel> call, Response<GetModel> response) {
-                RetrofitSingleton.showDialog(AddAnotherScreensOne.this);
+                RetrofitSingleton.showDialog(AddAnotherMobileScreen.this);
                 try {
                     if (response.body() != null) {
                         String msg = response.body().getApiMessage();
@@ -683,12 +679,12 @@ public class AddAnotherScreensOne extends AppCompatActivity implements
                         if (status == 1) {
                             List<GetModelSub> resp1 = response.body().getData();
                             if (resp1 != null) {
-                                modelAdapter = new AddAnotherScreensOne.ModelAdapter(resp1, getApplicationContext());
+                                modelAdapter = new AddAnotherMobileScreen.ModelAdapter(resp1, getApplicationContext());
                                 modelRecyclerview.setAdapter(modelAdapter);
                             }
                             //Toast.makeText(AddAnotherDevicesScreensOne.this, msg, Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(AddAnotherScreensOne.this, msg, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AddAnotherMobileScreen.this, msg, Toast.LENGTH_SHORT).show();
                         }
                     }
                 } catch (Exception ff) {
@@ -698,20 +694,20 @@ public class AddAnotherScreensOne extends AppCompatActivity implements
 
             @Override
             public void onFailure(Call<GetModel> call, Throwable t) {
-                RetrofitSingleton.showDialog(AddAnotherScreensOne.this);
-                Toast.makeText(AddAnotherScreensOne.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                RetrofitSingleton.showDialog(AddAnotherMobileScreen.this);
+                Toast.makeText(AddAnotherMobileScreen.this, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void ModelPopup() {
-        AlertDialog.Builder dialog = new AlertDialog.Builder(AddAnotherScreensOne.this);
+        AlertDialog.Builder dialog = new AlertDialog.Builder(AddAnotherMobileScreen.this);
         dialog.setCancelable(true);
         LayoutInflater inflater = getLayoutInflater();
         final View vieww = inflater.inflate(R.layout.device_dialog, null);
         SearchView searchView = vieww.findViewById(R.id.search_view);
         modelRecyclerview = vieww.findViewById(R.id.device_list);
-        modelRecyclerview.setLayoutManager(new LinearLayoutManager(AddAnotherScreensOne.this));
+        modelRecyclerview.setLayoutManager(new LinearLayoutManager(AddAnotherMobileScreen.this));
         modelRecyclerview.addItemDecoration(new DividerItemDecoration(modelRecyclerview.getContext(), DividerItemDecoration.VERTICAL));
         modelAPi(tk, bId);
         dialog.setView(vieww);
@@ -868,12 +864,12 @@ public class AddAnotherScreensOne extends AppCompatActivity implements
 
     private void StatusPopup(AppCompatTextView txt) {
         statusModelList.clear();
-        AlertDialog.Builder dialog = new AlertDialog.Builder(AddAnotherScreensOne.this);
+        AlertDialog.Builder dialog = new AlertDialog.Builder(AddAnotherMobileScreen.this);
         dialog.setCancelable(true);
         LayoutInflater inflater = getLayoutInflater();
         final View vieww = inflater.inflate(R.layout.device_dialog, null);
         statusRecyclerview = vieww.findViewById(R.id.device_list);
-        statusRecyclerview.setLayoutManager(new LinearLayoutManager(AddAnotherScreensOne.this));
+        statusRecyclerview.setLayoutManager(new LinearLayoutManager(AddAnotherMobileScreen.this));
         statusRecyclerview.addItemDecoration(new DividerItemDecoration(statusRecyclerview.getContext(), DividerItemDecoration.VERTICAL));
         toList(txt);
         dialog.setView(vieww);

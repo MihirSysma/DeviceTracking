@@ -34,7 +34,7 @@
             android:name=".AddAnotherDevicesScreensOne"
             android:exported="false" />
         <activity
-            android:name=".AddAnotherScreensOne"
+            android:name=".AddAnotherMobileScreen"
             android:exported="false" />
         <activity
             android:name=".AddOwnDevicesScreensOne"

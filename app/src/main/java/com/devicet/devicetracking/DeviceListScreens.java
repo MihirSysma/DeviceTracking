@@ -142,7 +142,7 @@ public class DeviceListScreens extends AppCompatActivity {
         });
 
         fab3.setOnClickListener(v -> {
-            Intent i = new Intent(DeviceListScreens.this, AddAnotherScreensOne.class);
+            Intent i = new Intent(DeviceListScreens.this, AddAnotherMobileScreen.class);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(i);
         });

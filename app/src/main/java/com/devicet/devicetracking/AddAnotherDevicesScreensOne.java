@@ -165,7 +165,6 @@ public class AddAnotherDevicesScreensOne extends AppCompatActivity implements
         // imei_ly.setVisibility(View.GONE);
 
 
-
         lay_add = findViewById(R.id.ly_add_device);
         lay_add.setVisibility(View.VISIBLE);
 
@@ -559,6 +558,7 @@ public class AddAnotherDevicesScreensOne extends AppCompatActivity implements
             }
         }
     }
+
     private void brandsapis(String tk, int bId) {
         RetrofitSingleton.showDialog(AddAnotherDevicesScreensOne.this);
         Retrofit retrofit1 = RetrofitSingleton.getClient();
@@ -706,6 +706,7 @@ public class AddAnotherDevicesScreensOne extends AppCompatActivity implements
             }
         });
     }
+
     private void ModelPopup() {
         AlertDialog.Builder dialog = new AlertDialog.Builder(AddAnotherDevicesScreensOne.this);
         dialog.setCancelable(true);
